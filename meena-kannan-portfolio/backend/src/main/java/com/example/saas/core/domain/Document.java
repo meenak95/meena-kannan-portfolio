@@ -24,7 +24,7 @@ public class Document {
 	private long size;
 
 	@Lob
-	@Column(name = "content_blob", nullable = false)
+	@Column(name = "content_blob", nullable = false, columnDefinition = "BYTEA")
 	private byte[] contentBlob;
 
 	@Column(name = "uploaded_by", nullable = false)
