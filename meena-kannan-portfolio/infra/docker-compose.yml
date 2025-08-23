@@ -28,7 +28,8 @@ services:
 
   backend:
     build: ../backend
-    env_file: ../.env
+    environment:
+      - SPRING_PROFILES_ACTIVE=dev
     depends_on:
       db:
         condition: service_healthy
