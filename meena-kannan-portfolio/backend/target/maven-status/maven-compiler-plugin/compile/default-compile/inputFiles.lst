@@ -8,6 +8,8 @@
 /workspace/meena-kannan-portfolio/backend/src/main/java/com/example/saas/core/domain/User.java
 /workspace/meena-kannan-portfolio/backend/src/main/java/com/example/saas/persistence/repo/ProjectRepository.java
 /workspace/meena-kannan-portfolio/backend/src/main/java/com/example/saas/persistence/repo/AuditLogRepository.java
+/workspace/meena-kannan-portfolio/backend/src/main/java/com/example/saas/api/ProjectController.java
+/workspace/meena-kannan-portfolio/backend/src/main/java/com/example/saas/core/service/ProjectService.java
 /workspace/meena-kannan-portfolio/backend/src/main/java/com/example/saas/common/web/GlobalExceptionHandler.java
 /workspace/meena-kannan-portfolio/backend/src/main/java/com/example/saas/persistence/repo/TenantRepository.java
 /workspace/meena-kannan-portfolio/backend/src/main/java/com/example/saas/persistence/repo/UserRepository.java
