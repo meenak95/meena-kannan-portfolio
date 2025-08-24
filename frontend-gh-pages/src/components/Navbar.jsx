@@ -37,7 +37,7 @@ const Navbar = () => {
               </div>
               <div className="hidden sm:block">
                 <span className="text-xl font-bold text-primary">Meena Kannan</span>
-                <div className="text-xs text-secondary">Full-Stack Developer</div>
+                <div className="text-xs text-secondary">Lead/Senior Software Engineer</div>
               </div>
             </Link>
           </div>
@@ -56,13 +56,19 @@ const Navbar = () => {
             >
               Portfolio
             </Link>
+            <Link 
+              to="/resume" 
+              className={`nav-link ${isActive('/resume') ? 'nav-link-active' : ''}`}
+            >
+              Resume
+            </Link>
           </div>
 
           {/* Right side actions */}
           <div className="hidden md:flex items-center space-x-3">
             {/* Contact button */}
             <a
-              href="mailto:meena@example.com"
+              href="mailto:meenakannan92@gmail.com"
               className="btn-primary"
             >
               Contact Me
@@ -107,8 +113,19 @@ const Navbar = () => {
             >
               Portfolio
             </Link>
+            <Link
+              to="/resume"
+              className={`block px-3 py-2 rounded-lg text-base font-medium transition-all duration-200 ${
+                isActive('/resume') 
+                  ? 'text-primary bg-[#21262d] border border-[#30363d]' 
+                  : 'text-secondary hover:text-primary hover:bg-[#21262d]/50'
+              }`}
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Resume
+            </Link>
             <a
-              href="mailto:meena@example.com"
+              href="mailto:meenakannan92@gmail.com"
               className="block px-3 py-2 text-base font-medium text-[#238636] hover:text-[#2ea043] hover:bg-[#21262d]/50 rounded-lg transition-all duration-200"
               onClick={() => setIsMenuOpen(false)}
             >

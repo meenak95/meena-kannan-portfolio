@@ -244,10 +244,9 @@ const Home = () => {
             Crafting digital experiences with passion and precision
           </p>
           <div className="flex justify-center space-x-6 text-secondary">
-            <a href="#" className="hover:text-primary transition-colors duration-200">GitHub</a>
-            <a href="#" className="hover:text-primary transition-colors duration-200">LinkedIn</a>
-            <a href="#" className="hover:text-primary transition-colors duration-200">Twitter</a>
-            <a href="#" className="hover:text-primary transition-colors duration-200">Contact</a>
+            <a href="https://github.com/meenak95" target="_blank" rel="noreferrer" className="hover:text-primary transition-colors duration-200">GitHub</a>
+            <a href="https://www.linkedin.com/" target="_blank" rel="noreferrer" className="hover:text-primary transition-colors duration-200">LinkedIn</a>
+            <a href="mailto:meenakannan92@gmail.com" className="hover:text-primary transition-colors duration-200">Contact</a>
           </div>
         </div>
       </footer>

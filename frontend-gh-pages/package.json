@@ -3,7 +3,7 @@
   "private": true,
   "version": "1.0.0",
   "type": "module",
-  "homepage": "https://meenadavin.github.io/meena-kannan-portfolio",
+  "homepage": "https://meenak95.github.io/meena-kannan-portfolio",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
