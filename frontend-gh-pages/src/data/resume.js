@@ -6,8 +6,7 @@ export const resume = {
   email: 'meenakannan92@gmail.com',
   links: {
     github: 'https://github.com/meenak95',
-    // Add your actual LinkedIn URL here if different
-    linkedin: 'https://www.linkedin.com/',
+    linkedin: 'https://www.linkedin.com/in/meena-kannan-mk',
   },
   summary:
     'Strategic and results-driven Lead Software Engineer with 9+ years architecting, developing, and deploying cloud-native solutions. Proven expertise across the end-to-end SDLC delivering scalable, secure, and highly available systems. Adept at leading cross-functional teams within Agile frameworks and translating complex business requirements into robust technical architectures that drive measurable outcomes.',

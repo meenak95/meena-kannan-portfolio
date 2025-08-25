@@ -11,7 +11,7 @@ import {
   Globe,
   Terminal,
   Cpu,
-  Rocket,
+  Cloud,
   Sparkles
 } from 'lucide-react'
 
@@ -102,8 +102,9 @@ const Home = () => {
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
               <Link
                 to="/login"
-                className="btn-primary group"
+                className="btn-primary group btn-glitter"
               >
+                <Cloud className="mr-2 h-5 w-5 cloud-icon" />
                 Get Started
                 <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform duration-200" />
               </Link>
@@ -200,7 +201,7 @@ const Home = () => {
         <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div className="glass-card p-12">
             <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-[#238636] to-[#2ea043] rounded-2xl mb-6">
-              <Rocket className="h-8 w-8 text-white" />
+              <Cloud className="h-8 w-8 text-white" />
             </div>
             
             <h2 className="text-4xl md:text-5xl font-bold text-primary mb-4">
@@ -214,8 +215,9 @@ const Home = () => {
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
                 to="/login"
-                className="btn-primary group"
+                className="btn-primary group btn-glitter"
               >
+                <Cloud className="mr-2 h-5 w-5 cloud-icon" />
                 Start Your Journey
                 <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform duration-200" />
               </Link>
@@ -245,7 +247,7 @@ const Home = () => {
           </p>
           <div className="flex justify-center space-x-6 text-secondary">
             <a href="https://github.com/meenak95" target="_blank" rel="noreferrer" className="hover:text-primary transition-colors duration-200">GitHub</a>
-            <a href="https://www.linkedin.com/" target="_blank" rel="noreferrer" className="hover:text-primary transition-colors duration-200">LinkedIn</a>
+            <a href="https://www.linkedin.com/in/meena-kannan-mk" target="_blank" rel="noreferrer" className="hover:text-primary transition-colors duration-200">LinkedIn</a>
             <a href="mailto:meenakannan92@gmail.com" className="hover:text-primary transition-colors duration-200">Contact</a>
           </div>
         </div>

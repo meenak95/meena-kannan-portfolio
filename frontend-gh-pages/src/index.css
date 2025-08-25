@@ -48,6 +48,59 @@
   .btn-primary {
     @apply bg-gradient-to-r from-[#238636] to-[#2ea043] hover:from-[#2ea043] hover:to-[#3fb950] text-white font-semibold py-3 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 hover:shadow-[0_10px_30px_rgba(46,160,67,0.3)] active:scale-95;
   }
+
+  /* Glittering button effects */
+  .btn-glitter {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn-glitter::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+      45deg,
+      transparent 30%,
+      rgba(255, 255, 255, 0.3) 50%,
+      transparent 70%
+    );
+    animation: glitter 3s infinite;
+    pointer-events: none;
+  }
+
+  .btn-glitter::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at random, 
+      rgba(255, 215, 0, 0.8) 1px, transparent 1px),
+      radial-gradient(circle at random, 
+        rgba(135, 206, 235, 0.6) 1px, transparent 1px),
+      radial-gradient(circle at random, 
+        rgba(144, 238, 144, 0.6) 1px, transparent 1px),
+      radial-gradient(circle at random, 
+        rgba(221, 160, 221, 0.6) 1px, transparent 1px);
+    background-size: 20px 20px, 25px 25px, 30px 30px, 35px 35px;
+    animation: sparkle 2s infinite linear;
+    pointer-events: none;
+  }
+
+  .cloud-icon {
+    filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.7));
+    transition: all 0.3s ease;
+  }
+
+  .btn-glitter:hover .cloud-icon {
+    filter: drop-shadow(0 0 15px rgba(255, 255, 255, 1));
+    transform: scale(1.1);
+  }
   
   .btn-secondary {
     @apply bg-[#21262d] hover:bg-[#30363d] text-[#f0f6fc] font-medium py-3 px-6 rounded-xl border border-[#30363d] hover:border-[#484f58] transition-colors duration-300 transform hover:scale-105 active:scale-95;
@@ -177,6 +230,16 @@
     opacity: 1;
     transform: translateX(0);
   }
+}
+
+@keyframes glitter {
+  0% { transform: translateX(-100%) translateY(-100%) rotate(0deg); }
+  100% { transform: translateX(100%) translateY(100%) rotate(360deg); }
+}
+
+@keyframes sparkle {
+  0%, 100% { opacity: 0; }
+  50% { opacity: 1; }
 }
 
 /* Animation classes */

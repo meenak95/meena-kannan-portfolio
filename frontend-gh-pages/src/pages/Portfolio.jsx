@@ -55,11 +55,12 @@ const Portfolio = () => {
       description: 'High-traffic licensing system handling ~25k tx/day and 3k+ concurrent users. Achieved 70% latency reduction and zero-downtime blue-green deployments.',
       technologies: ['Java', 'Spring Boot', 'PostgreSQL', 'Redis', 'AWS', 'Jenkins'],
       githubUrl: 'https://github.com/meenak95/meena-kannan-portfolio',
-      liveUrl: 'https://meenak95.github.io/meena-kannan-portfolio/',
+      liveUrl: null,
       rating: 4.9,
       stars: 312,
       featured: true,
       category: 'backend',
+      isEnterprise: true,
       image: 'https://images.unsplash.com/photo-1542751110-97427bbecf20?w=400&h=250&fit=crop'
     },
     {
@@ -68,11 +69,12 @@ const Portfolio = () => {
       description: 'ML-driven pipelines improving sales forecast accuracy by ~18% and reducing inventory costs by up to 12%.',
       technologies: ['Python', 'REST', 'PostgreSQL', 'AWS'],
       githubUrl: 'https://github.com/meenak95/meena-kannan-portfolio',
-      liveUrl: 'https://meenak95.github.io/meena-kannan-portfolio/',
+      liveUrl: null,
       rating: 4.8,
       stars: 189,
       featured: true,
       category: 'ai',
+      isEnterprise: true,
       image: 'https://images.unsplash.com/photo-1515879218367-8466d910aaa4?w=400&h=250&fit=crop'
     },
     {
@@ -81,11 +83,12 @@ const Portfolio = () => {
       description: 'Public portal serving 50,000+ applicants annually; automated workflows reduced processing from 3 days to under 2 hours.',
       technologies: ['Angular', 'Java', 'Spring Boot', 'PostgreSQL'],
       githubUrl: 'https://github.com/meenak95/meena-kannan-portfolio',
-      liveUrl: 'https://meenak95.github.io/meena-kannan-portfolio/',
+      liveUrl: null,
       rating: 4.7,
       stars: 156,
       featured: false,
       category: 'fullstack',
+      isEnterprise: true,
       image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=250&fit=crop'
     },
     {
@@ -94,11 +97,12 @@ const Portfolio = () => {
       description: 'Multi-tier approval workflow with complex eligibility validation and fee computation logic.',
       technologies: ['Java', 'Spring', 'Oracle'],
       githubUrl: 'https://github.com/meenak95/meena-kannan-portfolio',
-      liveUrl: 'https://meenak95.github.io/meena-kannan-portfolio/',
+      liveUrl: null,
       rating: 4.6,
       stars: 203,
       featured: true,
       category: 'backend',
+      isEnterprise: true,
       image: 'https://images.unsplash.com/photo-1526378722484-bd91ca387e72?w=400&h=250&fit=crop'
     },
     {
@@ -107,11 +111,12 @@ const Portfolio = () => {
       description: 'Core Spring Boot microservice and Drools-based digitization with 98% accuracy for legal invoice processing.',
       technologies: ['Java', 'Spring Boot', 'Drools', 'PostgreSQL'],
       githubUrl: 'https://github.com/meenak95/meena-kannan-portfolio',
-      liveUrl: 'https://meenak95.github.io/meena-kannan-portfolio/',
+      liveUrl: null,
       rating: 4.5,
       stars: 178,
       featured: false,
       category: 'backend',
+      isEnterprise: true,
       image: 'https://images.unsplash.com/photo-1531482615713-2afd69097998?w=400&h=250&fit=crop'
     },
     {
@@ -120,12 +125,27 @@ const Portfolio = () => {
       description: 'Loan origination and post-disbursement monitoring with third-party integrations and regulatory tracking.',
       technologies: ['Java', 'Spring', 'REST', 'Oracle'],
       githubUrl: 'https://github.com/meenak95/meena-kannan-portfolio',
-      liveUrl: 'https://meenak95.github.io/meena-kannan-portfolio/',
+      liveUrl: null,
       rating: 4.6,
       stars: 142,
       featured: false,
       category: 'backend',
+      isEnterprise: true,
       image: 'https://images.unsplash.com/photo-1516245834210-c4c142787335?w=400&h=250&fit=crop'
+    },
+    {
+      id: 7,
+      title: 'Personal Portfolio Website',
+      description: 'Modern, responsive portfolio built with React and Tailwind CSS. Features dark mode, smooth animations, and optimized performance.',
+      technologies: ['React', 'Tailwind CSS', 'JavaScript', 'Vite'],
+      githubUrl: 'https://github.com/meenak95/meena-kannan-portfolio',
+      liveUrl: 'https://meenak95.github.io/meena-kannan-portfolio/',
+      rating: 4.8,
+      stars: 89,
+      featured: false,
+      category: 'frontend',
+      isEnterprise: false,
+      image: 'https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=400&h=250&fit=crop'
     }
   ]);
 
@@ -195,7 +215,7 @@ const Portfolio = () => {
 
         {/* Category Filter */}
         <div className="flex flex-wrap justify-center gap-4 mb-12">
-          {['all', 'fullstack', 'mobile', 'backend', 'ai', 'devops'].map((category) => (
+          {['all', 'fullstack', 'frontend', 'backend', 'ai', 'devops'].map((category) => (
             <button
               key={category}
               onClick={() => setActiveCategory(category)}
@@ -213,76 +233,89 @@ const Portfolio = () => {
         {/* Projects Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {filteredProjects.map((project) => (
-            <div
-              key={project.id}
-              className="glass-card group hover:scale-105 transition-all duration-300 cursor-pointer"
-            >
-              {/* Project Image */}
-              <div className="relative overflow-hidden rounded-t-lg">
-                <img
-                  src={project.image}
-                  alt={project.title}
-                  className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-300"
-                />
-                {project.featured && (
-                  <div className="absolute top-4 right-4 bg-[#238636] text-white px-3 py-1 rounded-full text-sm font-medium">
-                    Featured
+            <div key={project.id} className="space-y-4">
+              {/* Enterprise Label Above Container */}
+              {project.isEnterprise && (
+                <div className="flex items-center gap-2 text-sm text-secondary">
+                  <div className="w-2 h-2 bg-[#f78166] rounded-full"></div>
+                  <span className="font-medium">Enterprise Project</span>
+                </div>
+              )}
+              
+              <div className="glass-card group hover:scale-105 transition-all duration-300 cursor-pointer">
+                {/* Project Image */}
+                <div className="relative overflow-hidden rounded-t-lg">
+                  <img
+                    src={project.image}
+                    alt={project.title}
+                    className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-300"
+                  />
+                  {project.featured && !project.isEnterprise && (
+                    <div className="absolute top-4 right-4 bg-[#238636] text-white px-3 py-1 rounded-full text-sm font-medium">
+                      Featured
+                    </div>
+                  )}
+                </div>
+
+                {/* Project Content */}
+                <div className="p-6">
+                  <h3 className="text-xl font-bold text-primary mb-2 group-hover:text-[#238636] transition-colors duration-200">
+                    {project.title}
+                  </h3>
+                  <p className="text-secondary mb-4 line-clamp-3">
+                    {project.description}
+                  </p>
+
+                  {/* Technologies */}
+                  <div className="flex flex-wrap gap-2 mb-4">
+                    {project.technologies.map((tech) => {
+                      const IconComponent = getIconForTechnology(tech);
+                      return (
+                        <span
+                          key={tech}
+                          className="flex items-center gap-2 px-3 py-1 bg-[#21262d] text-secondary rounded-full text-sm"
+                        >
+                          <IconComponent className="w-4 h-4" />
+                          {tech}
+                        </span>
+                      );
+                    })}
                   </div>
-                )}
-              </div>
 
-              {/* Project Content */}
-              <div className="p-6">
-                <h3 className="text-xl font-bold text-primary mb-2 group-hover:text-[#238636] transition-colors duration-200">
-                  {project.title}
-                </h3>
-                <p className="text-secondary mb-4 line-clamp-3">
-                  {project.description}
-                </p>
+                  {/* Project Stats */}
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center gap-2">
+                      <span className="text-[#238636] font-medium">{project.rating}</span>
+                      <span className="text-secondary">★</span>
+                      <span className="text-secondary text-sm">({project.stars})</span>
+                    </div>
+                  </div>
 
-                {/* Technologies */}
-                <div className="flex flex-wrap gap-2 mb-4">
-                  {project.technologies.map((tech) => {
-                    const IconComponent = getIconForTechnology(tech);
-                    return (
-                      <span
-                        key={tech}
-                        className="flex items-center gap-2 px-3 py-1 bg-[#21262d] text-secondary rounded-full text-sm"
+                  {/* Action Buttons */}
+                  <div className="flex gap-3">
+                    <a
+                      href={project.githubUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex-1 bg-[#21262d] hover:bg-[#30363d] text-primary hover:text-[#238636] px-4 py-2 rounded-lg text-center font-medium transition-all duration-200"
+                    >
+                      View Code
+                    </a>
+                    {project.liveUrl ? (
+                      <a
+                        href={project.liveUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex-1 bg-[#238636] hover:bg-[#2ea043] text-white px-4 py-2 rounded-lg text-center font-medium transition-all duration-200"
                       >
-                        <IconComponent className="w-4 h-4" />
-                        {tech}
-                      </span>
-                    );
-                  })}
-                </div>
-
-                {/* Project Stats */}
-                <div className="flex items-center justify-between mb-4">
-                  <div className="flex items-center gap-2">
-                    <span className="text-[#238636] font-medium">{project.rating}</span>
-                    <span className="text-secondary">★</span>
-                    <span className="text-secondary text-sm">({project.stars})</span>
+                        Live Demo
+                      </a>
+                    ) : (
+                      <div className="flex-1 bg-[#f78166] text-white px-4 py-2 rounded-lg text-center font-medium cursor-not-allowed">
+                        Enterprise Project
+                      </div>
+                    )}
                   </div>
-                </div>
-
-                {/* Action Buttons */}
-                <div className="flex gap-3">
-                  <a
-                    href={project.githubUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex-1 bg-[#21262d] hover:bg-[#30363d] text-primary hover:text-[#238636] px-4 py-2 rounded-lg text-center font-medium transition-all duration-200"
-                  >
-                    View Code
-                  </a>
-                  <a
-                    href={project.liveUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex-1 bg-[#238636] hover:bg-[#2ea043] text-white px-4 py-2 rounded-lg text-center font-medium transition-all duration-200"
-                  >
-                    Live Demo
-                  </a>
                 </div>
               </div>
             </div>

@@ -110,6 +110,22 @@ const Resume = () => {
             ))}
           </div>
         </Section>
+
+        {/* Contact Section */}
+        <div className="mt-12 text-center">
+          <div className="glass-card p-8">
+            <h3 className="text-2xl font-bold text-primary mb-4">
+              Interested in working together? Let's connect!
+            </h3>
+            <a
+              href={`mailto:${resume.email}`}
+              className="inline-flex items-center gap-2 btn-primary"
+            >
+              <Mail className="w-5 h-5" />
+              Contact Me
+            </a>
+          </div>
+        </div>
       </div>
     </div>
   )
