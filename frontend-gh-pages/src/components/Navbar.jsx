@@ -46,21 +46,15 @@ const Navbar = () => {
           <div className="hidden md:flex items-center space-x-1">
             <Link 
               to="/" 
-              className={`nav-link ${isActive('/') ? 'nav-link-active' : ''}`}
+              className={`nav-link ${isActive('/') || isActive('/resume') ? 'nav-link-active' : ''}`}
             >
-              Home
+              Resume
             </Link>
             <Link 
               to="/portfolio" 
               className={`nav-link ${isActive('/portfolio') ? 'nav-link-active' : ''}`}
             >
               Portfolio
-            </Link>
-            <Link 
-              to="/resume" 
-              className={`nav-link ${isActive('/resume') ? 'nav-link-active' : ''}`}
-            >
-              Resume
             </Link>
           </div>
 
@@ -94,13 +88,13 @@ const Navbar = () => {
             <Link
               to="/"
               className={`block px-3 py-2 rounded-lg text-base font-medium transition-all duration-200 ${
-                isActive('/') 
-                  ? 'text-primary bg-[#21262d] border border-[#30363d]' 
+                isActive('/') || isActive('/resume')
+                  ? 'text-primary bg-[#21262d] border border-[#30363d]'
                   : 'text-secondary hover:text-primary hover:bg-[#21262d]/50'
               }`}
               onClick={() => setIsMenuOpen(false)}
             >
-              Home
+              Resume
             </Link>
             <Link
               to="/portfolio"
