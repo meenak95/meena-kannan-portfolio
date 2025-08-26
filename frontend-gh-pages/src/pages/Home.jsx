@@ -73,11 +73,20 @@ const Home = () => {
     <div className="min-h-screen pt-16">
       {/* Hero Section */}
       <section className="relative overflow-hidden py-20 lg:py-32">
-        {/* Animated background elements */}
+        {/* Cloud Computing Theme Background */}
         <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-[#238636]/20 to-[#2ea043]/20 rounded-full blur-3xl float"></div>
+          {/* Main Cloud Elements */}
+          <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-[#3a6ff]/20 to-[#58a6ff]/30 rounded-full blur-3xl float-delay-1"></div>
           <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-tr from-[#58a6ff]/20 to-[#79c0ff]/20 rounded-full blur-3xl float-delay-2"></div>
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-r from-[#a371f7]/10 to-[#bc8cff]/10 rounded-full blur-3xl float-delay-1"></div>
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-r from-[#3a6ff]/10 to-[#7877c6]/15 rounded-full blur-3xl float-delay-3"></div>
+          
+          {/* Cloud Particles */}
+          <div className="cloud-particles"></div>
+          
+          {/* Additional Cloud Effects */}
+          <div className="absolute top-20 left-20 w-32 h-32 bg-gradient-to-r from-[#3a6ff]/10 to-transparent rounded-full blur-2xl animate-cloud-float"></div>
+          <div className="absolute bottom-32 right-32 w-24 h-24 bg-gradient-to-l from-[#58a6ff]/15 to-transparent rounded-full blur-xl float-delay-1"></div>
+          <div className="absolute top-40 right-20 w-16 h-16 bg-[#79c0ff]/20 rounded-full blur-lg float-delay-2"></div>
         </div>
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">

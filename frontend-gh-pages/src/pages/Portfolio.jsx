@@ -20,7 +20,8 @@ import {
   SiSlack,
   SiFigma,
   SiDocker,
-  SiGit
+  SiGit,
+  SiSpringboot
 } from 'react-icons/si';
 import { 
   DiJavascript1, 
@@ -42,7 +43,8 @@ import {
   DiWordpress,
   DiDrupal,
   DiJoomla,
-  DiTypo3
+  DiTypo3,
+  DiJava
 } from 'react-icons/di';
 
 const Portfolio = () => {
@@ -171,6 +173,9 @@ const Portfolio = () => {
       'Terraform': SiTerraform,
       'AWS': SiAmazonwebservices,
       'Kubernetes': SiKubernetes,
+      'Java': DiJava,
+      'Spring Boot': SiSpringboot,
+      'Spring': SiSpringboot,
       'JavaScript': DiJavascript1,
       'CSS': DiCss3,
       'HTML': DiHtml5,
@@ -242,7 +247,7 @@ const Portfolio = () => {
                 </div>
               )}
               
-              <div className="glass-card group hover:scale-105 transition-all duration-300 cursor-pointer">
+              <div className="glass-card group hover-cloud transition-all duration-300 cursor-pointer">
                 {/* Project Image */}
                 <div className="relative overflow-hidden rounded-t-lg">
                   <img
@@ -322,11 +327,18 @@ const Portfolio = () => {
           ))}
         </div>
 
-        {/* Skills Section */}
-        <div className="mt-20">
-          <h2 className="text-3xl font-bold text-primary text-center mb-12">
-            Technical Skills
-          </h2>
+              {/* Skills Section */}
+      <div className="mt-20 relative">
+        {/* Cloud Background for Skills */}
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="absolute top-10 left-10 w-40 h-40 bg-gradient-to-r from-[#3a6ff]/5 to-transparent rounded-full blur-3xl float-delay-1"></div>
+          <div className="absolute bottom-10 right-10 w-32 h-32 bg-gradient-to-l from-[#58a6ff]/8 to-transparent rounded-full blur-2xl float-delay-2"></div>
+          <div className="cloud-particles"></div>
+        </div>
+        
+        <h2 className="text-3xl font-bold text-primary text-center mb-12 relative">
+          <span className="gradient-text">Cloud-Powered</span> Technical Skills
+        </h2>
           
           <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
             {[
@@ -341,15 +353,17 @@ const Portfolio = () => {
               { name: 'Figma', icon: SiFigma, color: 'text-[#f24e1e]' },
               { name: 'Jenkins', icon: SiJenkins, color: 'text-[#d24939]' },
               { name: 'Jira', icon: SiJira, color: 'text-[#0052cc]' },
-              { name: 'Slack', icon: SiSlack, color: 'text-[#4a154b]' }
+              { name: 'Slack', icon: SiSlack, color: 'text-[#4a154b]' },
+              { name: 'Java', icon: DiJava, color: 'text-[#007396]' },
+              { name: 'Spring Boot', icon: SiSpringboot, color: 'text-[#6db33f]' }
             ].map((skill) => {
               const IconComponent = skill.icon;
               return (
                 <div
                   key={skill.name}
-                  className="flex flex-col items-center p-4 glass-card hover:scale-110 transition-all duration-200 cursor-pointer group"
+                  className="flex flex-col items-center p-4 glass-card hover-cloud transition-all duration-300 cursor-pointer group"
                 >
-                  <IconComponent className={`w-12 h-12 ${skill.color} group-hover:scale-110 transition-transform duration-200`} />
+                  <IconComponent className={`w-12 h-12 ${skill.color} group-hover:scale-110 transition-transform duration-200 animate-cloud-float`} />
                   <span className="text-secondary text-sm mt-2 text-center group-hover:text-primary transition-colors duration-200">
                     {skill.name}
                   </span>
