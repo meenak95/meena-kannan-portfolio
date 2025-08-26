@@ -12,12 +12,17 @@
   
   body {
     @apply bg-[#0d1117] text-[#f0f6fc] antialiased;
-    background: radial-gradient(ellipse at top, #0d1117 0%, #161b22 50%, #0d1117 100%);
+    background: 
+      radial-gradient(circle at 20% 80%, rgba(58, 166, 255, 0.08) 0%, transparent 50%),
+      radial-gradient(circle at 80% 20%, rgba(120, 119, 198, 0.06) 0%, transparent 50%),
+      radial-gradient(circle at 40% 40%, rgba(255, 255, 255, 0.02) 0%, transparent 50%),
+      linear-gradient(135deg, #0d1117 0%, #161b22 50%, #21262d 100%);
     position: relative;
     overflow-x: hidden;
+    cursor: none; /* Hide default cursor for custom cloud cursor */
   }
 
-  /* Cloud Computing Theme Background */
+  /* Advanced Interactive Cloud Background */
   body::before {
     content: '';
     position: fixed;
@@ -26,39 +31,63 @@
     width: 100%;
     height: 100%;
     background: 
-      radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.05) 0%, transparent 50%),
-      radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.03) 0%, transparent 50%),
-      radial-gradient(circle at 40% 40%, rgba(58, 166, 255, 0.04) 0%, transparent 50%);
+      radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(58, 166, 255, 0.15) 0%, transparent 25%),
+      radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.08) 0%, transparent 60%),
+      radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.04) 0%, transparent 60%),
+      radial-gradient(circle at 60% 60%, rgba(58, 166, 255, 0.06) 0%, transparent 50%);
     pointer-events: none;
-    z-index: -1;
+    z-index: -2;
+    animation: cloudBackgroundPulse 8s ease-in-out infinite;
+    transition: all 0.3s ease;
   }
 
-  /* Custom scrollbar */
+  /* Interactive Cloud Cursor */
+  body::after {
+    content: '☁️';
+    position: fixed;
+    top: var(--mouse-y, 50%);
+    left: var(--mouse-x, 50%);
+    transform: translate(-50%, -50%);
+    font-size: 20px;
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.8;
+    filter: drop-shadow(0 0 10px rgba(58, 166, 255, 0.8));
+    animation: cloudCursorFloat 2s ease-in-out infinite;
+    transition: all 0.1s ease;
+  }
+
+  /* Custom scrollbar with cloud theme */
   ::-webkit-scrollbar {
-    width: 8px;
+    width: 12px;
   }
   
   ::-webkit-scrollbar-track {
     @apply bg-[#161b22];
+    border-radius: 10px;
   }
   
   ::-webkit-scrollbar-thumb {
-    @apply bg-[#30363d] rounded-full;
+    background: linear-gradient(135deg, rgba(58, 166, 255, 0.6), rgba(120, 119, 198, 0.8));
+    border-radius: 10px;
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
   }
   
   ::-webkit-scrollbar-thumb:hover {
-    @apply bg-[#484f58];
+    background: linear-gradient(135deg, rgba(58, 166, 255, 0.8), rgba(120, 119, 198, 1));
   }
 }
 
 @layer components {
-  /* Cloud Computing Themed Glassmorphism */
+  /* Advanced Interactive Cloud Glassmorphism */
   .glass-card {
     @apply bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl;
     box-shadow: 
       0 8px 32px 0 rgba(0, 0, 0, 0.37),
-      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      inset 0 1px 0 rgba(255, 255, 255, 0.1),
+      0 0 0 1px rgba(58, 166, 255, 0.1);
     position: relative;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   }
   
   .glass-card::before {
@@ -68,23 +97,46 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(135deg, rgba(58, 166, 255, 0.05) 0%, transparent 50%);
+    background: 
+      linear-gradient(135deg, rgba(58, 166, 255, 0.08) 0%, transparent 50%),
+      radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.05) 0%, transparent 70%);
     border-radius: inherit;
     pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .glass-card:hover::before {
+    opacity: 1;
   }
   
   .glass-card-hover {
-    @apply hover:bg-white/10 hover:border-white/20 transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_20px_60px_0_rgba(58,166,255,0.2)];
+    @apply hover:bg-white/10 hover:border-white/20 transition-all duration-300 hover:scale-[1.02];
+    transform-style: preserve-3d;
   }
 
-  /* Cloud Computing Themed Buttons */
-  .btn-primary {
-    @apply bg-gradient-to-r from-[#238636] to-[#2ea043] hover:from-[#2ea043] hover:to-[#3fb950] text-white font-semibold py-3 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 active:scale-95;
+  .glass-card-hover:hover {
     box-shadow: 
-      0 10px 30px rgba(46,160,67,0.3),
-      0 0 20px rgba(58, 166, 255, 0.2);
+      0 20px 60px 0 rgba(58, 166, 255, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.2),
+      0 0 0 2px rgba(58, 166, 255, 0.2);
+    transform: translateY(-5px) rotateX(5deg) rotateY(5deg) scale(1.02);
+  }
+
+  /* Highly Immersive Cloud Computing Buttons */
+  .btn-primary {
+    @apply bg-gradient-to-r from-[#238636] to-[#2ea043] text-white font-semibold py-4 px-8 rounded-xl transition-all duration-500 transform;
+    background: 
+      linear-gradient(135deg, #238636 0%, #2ea043 50%, #3fb950 100%),
+      radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.2) 0%, transparent 70%);
+    box-shadow: 
+      0 15px 35px rgba(46, 160, 67, 0.4),
+      0 5px 15px rgba(58, 166, 255, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
     position: relative;
     overflow: hidden;
+    transform-style: preserve-3d;
+    cursor: pointer;
   }
 
   .btn-primary::before {
@@ -94,17 +146,36 @@
     left: -50%;
     width: 200%;
     height: 200%;
-    background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
-    transform: scale(0);
-    transition: transform 0.5s ease;
+    background: 
+      conic-gradient(from 0deg, transparent, rgba(255, 255, 255, 0.3), transparent),
+      radial-gradient(circle, rgba(58, 166, 255, 0.2) 0%, transparent 70%);
+    transform: scale(0) rotate(0deg);
+    transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    border-radius: 50%;
   }
 
   .btn-primary:hover::before {
-    transform: scale(1);
-    animation: cloudPulse 2s infinite;
+    transform: scale(1.5) rotate(180deg);
+    animation: cloudButtonPulse 2s ease-in-out infinite;
   }
 
-  /* Enhanced Cloud Glittering Effects */
+  .btn-primary:hover {
+    transform: translateY(-8px) rotateX(-10deg) scale(1.05);
+    box-shadow: 
+      0 25px 50px rgba(46, 160, 67, 0.6),
+      0 10px 30px rgba(58, 166, 255, 0.5),
+      inset 0 2px 0 rgba(255, 255, 255, 0.2);
+    background: 
+      linear-gradient(135deg, #2ea043 0%, #3fb950 50%, #4fc55d 100%),
+      radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.3) 0%, transparent 70%);
+  }
+
+  .btn-primary:active {
+    transform: translateY(-4px) rotateX(-5deg) scale(1.02);
+    transition: all 0.1s ease;
+  }
+
+  /* Ultra-Enhanced Cloud Glittering Effects */
   .btn-glitter {
     position: relative;
     overflow: hidden;
@@ -113,20 +184,20 @@
   .btn-glitter::before {
     content: '';
     position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: linear-gradient(
-      45deg,
-      transparent 30%,
-      rgba(58, 166, 255, 0.4) 40%,
-      rgba(255, 255, 255, 0.6) 50%,
-      rgba(120, 119, 198, 0.4) 60%,
-      transparent 70%
-    );
-    animation: cloudGlitter 3s infinite;
+    top: -100%;
+    left: -100%;
+    width: 300%;
+    height: 300%;
+    background: 
+      conic-gradient(from 45deg, 
+        transparent 0deg, 
+        rgba(58, 166, 255, 0.6) 90deg, 
+        rgba(255, 255, 255, 0.8) 180deg, 
+        rgba(120, 119, 198, 0.6) 270deg, 
+        transparent 360deg);
+    animation: hyperCloudGlitter 3s linear infinite;
     pointer-events: none;
+    border-radius: 50%;
   }
 
   .btn-glitter::after {
@@ -137,51 +208,106 @@
     right: 0;
     bottom: 0;
     background: 
-      radial-gradient(circle at 25% 75%, rgba(58, 166, 255, 0.8) 1px, transparent 2px),
-      radial-gradient(circle at 75% 25%, rgba(255, 255, 255, 0.9) 1px, transparent 2px),
-      radial-gradient(circle at 50% 50%, rgba(120, 119, 198, 0.7) 1px, transparent 2px),
-      radial-gradient(circle at 80% 80%, rgba(58, 166, 255, 0.6) 1px, transparent 2px);
-    background-size: 30px 30px, 40px 40px, 35px 35px, 25px 25px;
-    animation: cloudSparkle 2.5s infinite linear;
+      radial-gradient(circle at 20% 20%, rgba(58, 166, 255, 0.9) 2px, transparent 3px),
+      radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 1) 1px, transparent 2px),
+      radial-gradient(circle at 40% 60%, rgba(120, 119, 198, 0.8) 2px, transparent 3px),
+      radial-gradient(circle at 60% 40%, rgba(58, 166, 255, 0.7) 1px, transparent 2px),
+      radial-gradient(circle at 30% 80%, rgba(255, 255, 255, 0.9) 1px, transparent 2px);
+    background-size: 50px 50px, 40px 40px, 60px 60px, 30px 30px, 45px 45px;
+    animation: ultraCloudSparkle 2s infinite linear;
     pointer-events: none;
   }
 
-  /* Cloud Icon Effects */
+  /* Interactive Cloud Icon Effects */
   .cloud-icon {
-    filter: drop-shadow(0 0 8px rgba(58, 166, 255, 0.7));
-    transition: all 0.3s ease;
+    filter: drop-shadow(0 0 12px rgba(58, 166, 255, 0.8));
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transform-style: preserve-3d;
   }
 
   .btn-glitter:hover .cloud-icon {
-    filter: drop-shadow(0 0 15px rgba(58, 166, 255, 1)) drop-shadow(0 0 25px rgba(255, 255, 255, 0.8));
-    transform: scale(1.1);
-    animation: cloudFloat 2s ease-in-out infinite;
+    filter: 
+      drop-shadow(0 0 20px rgba(58, 166, 255, 1)) 
+      drop-shadow(0 0 35px rgba(255, 255, 255, 0.8))
+      drop-shadow(0 5px 15px rgba(0, 0, 0, 0.3));
+    transform: scale(1.2) rotateY(15deg) translateZ(10px);
+    animation: intensiveCloudFloat 1.5s ease-in-out infinite;
   }
   
   .btn-secondary {
-    @apply bg-[#21262d] hover:bg-[#30363d] text-[#f0f6fc] font-medium py-3 px-6 rounded-xl border border-[#30363d] hover:border-[#484f58] transition-colors duration-300 transform hover:scale-105 active:scale-95;
-    box-shadow: 0 0 15px rgba(58, 166, 255, 0.1);
+    @apply bg-[#21262d] hover:bg-[#30363d] text-[#f0f6fc] font-medium py-4 px-8 rounded-xl border border-[#30363d] hover:border-[#484f58] transition-all duration-300 transform;
+    box-shadow: 
+      0 8px 25px rgba(58, 166, 255, 0.15),
+      inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn-secondary::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: radial-gradient(circle, rgba(58, 166, 255, 0.3) 0%, transparent 70%);
+    transform: translate(-50%, -50%);
+    transition: all 0.5s ease;
+    border-radius: 50%;
+  }
+
+  .btn-secondary:hover::before {
+    width: 200%;
+    height: 200%;
+  }
+
+  .btn-secondary:hover {
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: 
+      0 15px 40px rgba(58, 166, 255, 0.25),
+      inset 0 2px 0 rgba(255, 255, 255, 0.1);
   }
   
   .btn-outline {
-    @apply bg-transparent border-2 border-[#30363d] text-[#f0f6fc] hover:border-[#484f58] hover:bg-[#21262d]/50 font-medium py-3 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 active:scale-95;
-    box-shadow: 0 0 20px rgba(58, 166, 255, 0.1);
+    @apply bg-transparent border-2 border-[#30363d] text-[#f0f6fc] hover:border-[#484f58] hover:bg-[#21262d]/50 font-medium py-4 px-8 rounded-xl transition-all duration-300 transform;
+    box-shadow: 
+      0 0 25px rgba(58, 166, 255, 0.1),
+      inset 0 0 0 1px rgba(58, 166, 255, 0.1);
+    position: relative;
+    overflow: hidden;
   }
 
-  /* Cloud Computing Input Fields */
+  .btn-outline:hover {
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: 
+      0 15px 40px rgba(58, 166, 255, 0.2),
+      inset 0 0 0 2px rgba(58, 166, 255, 0.3);
+    background: linear-gradient(135deg, rgba(58, 166, 255, 0.1), rgba(120, 119, 198, 0.05));
+  }
+
+  /* Interactive Cloud Computing Input Fields */
   .input-field {
-    @apply w-full px-4 py-3 bg-[#0d1117] border border-[#30363d] rounded-xl text-[#f0f6fc] placeholder-[#7d8590] focus:ring-2 focus:ring-[#3a6ff] focus:border-[#3a6ff] focus:outline-none transition-all duration-300;
-    box-shadow: 0 0 10px rgba(58, 166, 255, 0.1);
+    @apply w-full px-6 py-4 bg-[#0d1117] border border-[#30363d] rounded-xl text-[#f0f6fc] placeholder-[#7d8590] focus:outline-none transition-all duration-300;
+    box-shadow: 
+      0 4px 15px rgba(58, 166, 255, 0.1),
+      inset 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: relative;
   }
 
   .input-field:focus {
-    box-shadow: 0 0 20px rgba(58, 166, 255, 0.3);
+    border-color: rgba(58, 166, 255, 0.6);
+    box-shadow: 
+      0 8px 25px rgba(58, 166, 255, 0.3),
+      inset 0 2px 4px rgba(0, 0, 0, 0.1),
+      0 0 0 4px rgba(58, 166, 255, 0.1);
+    transform: translateY(-2px);
   }
 
-  /* Navigation with Cloud Theme */
+  /* Advanced Interactive Navigation */
   .nav-link {
-    @apply text-[#7d8590] hover:text-[#f0f6fc] px-3 py-2 rounded-lg font-medium transition-all duration-200 hover:bg-[#21262d]/50;
+    @apply text-[#7d8590] hover:text-[#f0f6fc] px-4 py-3 rounded-lg font-medium transition-all duration-300 hover:bg-[#21262d]/50;
     position: relative;
+    overflow: hidden;
   }
 
   .nav-link::before {
@@ -190,74 +316,133 @@
     bottom: 0;
     left: 50%;
     width: 0;
-    height: 2px;
+    height: 3px;
     background: linear-gradient(90deg, transparent, rgba(58, 166, 255, 0.8), transparent);
-    transition: all 0.3s ease;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     transform: translateX(-50%);
+    border-radius: 2px;
+  }
+
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at 50% 50%, rgba(58, 166, 255, 0.1) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    border-radius: inherit;
   }
 
   .nav-link:hover::before {
     width: 100%;
   }
+
+  .nav-link:hover::after {
+    opacity: 1;
+  }
+
+  .nav-link:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(58, 166, 255, 0.2);
+  }
   
   .nav-link-active {
     @apply text-[#f0f6fc] bg-[#21262d] border border-[#30363d];
-    box-shadow: 0 0 15px rgba(58, 166, 255, 0.2);
+    box-shadow: 
+      0 8px 25px rgba(58, 166, 255, 0.2),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
   }
 
-  /* Cloud Computing Stats Cards */
+  /* Interactive Cloud Computing Stats Cards */
   .stat-card {
     @apply glass-card glass-card-hover p-6 border-l-4;
     border-left-color: rgba(58, 166, 255, 0.8);
     position: relative;
     overflow: hidden;
+    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   }
 
   .stat-card::after {
     content: '';
     position: absolute;
-    top: -50%;
+    top: -100%;
     right: -50%;
     width: 100%;
-    height: 200%;
-    background: linear-gradient(45deg, transparent, rgba(58, 166, 255, 0.05), transparent);
+    height: 300%;
+    background: linear-gradient(45deg, transparent, rgba(58, 166, 255, 0.08), transparent);
     transform: rotate(45deg);
-    animation: cloudSweep 4s infinite;
+    animation: cloudSweep 6s infinite;
+    pointer-events: none;
   }
 
-  /* Project cards with cloud effects */
+  .stat-card:hover {
+    transform: translateY(-10px) rotateX(5deg) scale(1.02);
+    border-left-color: rgba(58, 166, 255, 1);
+  }
+
+  /* Project cards with advanced cloud effects */
   .project-card {
     @apply glass-card glass-card-hover p-6 cursor-pointer;
     position: relative;
+    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   }
 
   .project-card:hover {
     box-shadow: 
-      0 20px 60px 0 rgba(0, 0, 0, 0.5),
-      0 0 30px rgba(58, 166, 255, 0.3);
+      0 25px 70px 0 rgba(0, 0, 0, 0.5),
+      0 10px 40px rgba(58, 166, 255, 0.4),
+      inset 0 2px 0 rgba(255, 255, 255, 0.1);
+    transform: translateY(-15px) rotateX(10deg) rotateY(5deg) scale(1.02);
   }
 
-  /* Skill badges with cloud theme */
+  /* Interactive skill badges */
   .skill-badge {
-    @apply px-3 py-1 bg-[#21262d] text-[#7d8590] text-sm rounded-full border border-[#30363d] hover:bg-[#30363d] hover:text-[#f0f6fc] transition-all duration-200;
+    @apply px-4 py-2 bg-[#21262d] text-[#7d8590] text-sm rounded-full border border-[#30363d] hover:bg-[#30363d] hover:text-[#f0f6fc] transition-all duration-300;
     position: relative;
+    overflow: hidden;
+  }
+
+  .skill-badge::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: radial-gradient(circle, rgba(58, 166, 255, 0.3) 0%, transparent 70%);
+    transform: translate(-50%, -50%);
+    transition: all 0.4s ease;
+    border-radius: 50%;
+  }
+
+  .skill-badge:hover::before {
+    width: 200%;
+    height: 200%;
   }
 
   .skill-badge:hover {
-    box-shadow: 0 0 15px rgba(58, 166, 255, 0.3);
-    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(58, 166, 255, 0.3);
+    transform: translateY(-3px) scale(1.05);
+    border-color: rgba(58, 166, 255, 0.5);
   }
 
-  /* Gradient text with cloud theme */
+  /* Enhanced gradient text */
   .gradient-text {
     @apply bg-gradient-to-r from-[#58a6ff] to-[#79c0ff] bg-clip-text text-transparent;
     position: relative;
+    animation: gradientShimmer 3s ease-in-out infinite;
   }
 
-  /* Cloud Computing Animated Background */
+  /* Interactive cloud computing animated background */
   .animated-bg {
-    background: linear-gradient(-45deg, #0d1117, #161b22, #21262d, #0d1117);
-    background-size: 400% 400%;
+    background: 
+      linear-gradient(-45deg, #0d1117, #161b22, #21262d, #0d1117),
+      radial-gradient(circle at 20% 50%, rgba(58, 166, 255, 0.03) 0%, transparent 50%),
+      radial-gradient(circle at 80% 50%, rgba(120, 119, 198, 0.02) 0%, transparent 50%);
+    background-size: 400% 400%, 100% 100%, 100% 100%;
     animation: gradientShift 15s ease infinite;
     position: relative;
   }
@@ -270,32 +455,32 @@
     right: 0;
     bottom: 0;
     background: 
-      radial-gradient(circle at 20% 50%, rgba(58, 166, 255, 0.03) 0%, transparent 50%),
-      radial-gradient(circle at 80% 50%, rgba(120, 119, 198, 0.02) 0%, transparent 50%);
+      radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(58, 166, 255, 0.05) 0%, transparent 50%);
     animation: cloudDrift 20s infinite linear;
+    pointer-events: none;
   }
 
-  /* Floating cloud animations */
+  /* Enhanced floating cloud animations */
   .float {
     animation: float 6s ease-in-out infinite;
   }
 
   .float-delay-1 {
-    animation: cloudFloat1 8s ease-in-out infinite;
+    animation: hyperCloudFloat1 8s ease-in-out infinite;
     animation-delay: 0s;
   }
 
   .float-delay-2 {
-    animation: cloudFloat2 10s ease-in-out infinite;
+    animation: hyperCloudFloat2 10s ease-in-out infinite;
     animation-delay: 2s;
   }
 
   .float-delay-3 {
-    animation: cloudFloat3 7s ease-in-out infinite;
+    animation: hyperCloudFloat3 7s ease-in-out infinite;
     animation-delay: 4s;
   }
 
-  /* Cloud Computing Particle System */
+  /* Advanced Cloud Computing Particle System */
   .cloud-particles {
     position: absolute;
     width: 100%;
@@ -306,28 +491,43 @@
 
   .cloud-particles::before,
   .cloud-particles::after {
-    content: '';
+    content: '☁️';
     position: absolute;
-    width: 4px;
-    height: 4px;
-    background: rgba(58, 166, 255, 0.6);
-    border-radius: 50%;
-    animation: cloudParticles 15s infinite linear;
+    font-size: 12px;
+    opacity: 0.6;
+    animation: hyperCloudParticles 20s infinite linear;
+    filter: drop-shadow(0 0 5px rgba(58, 166, 255, 0.5));
   }
 
   .cloud-particles::before {
     left: 10%;
     animation-delay: 0s;
+    animation-duration: 25s;
   }
 
   .cloud-particles::after {
     left: 70%;
-    animation-delay: 7s;
+    animation-delay: 10s;
+    animation-duration: 30s;
+  }
+
+  /* Interactive hover cloud effects */
+  .hover-cloud {
+    @apply transition-all duration-500;
+    transform-style: preserve-3d;
+  }
+
+  .hover-cloud:hover {
+    box-shadow: 
+      0 20px 60px rgba(58, 166, 255, 0.4),
+      0 10px 30px rgba(0, 0, 0, 0.2),
+      inset 0 2px 0 rgba(255, 255, 255, 0.1);
+    transform: translateY(-10px) rotateX(8deg) rotateY(4deg) scale(1.03);
   }
 }
 
 @layer utilities {
-  /* Text colors with cloud theme */
+  /* Enhanced text colors with cloud theme */
   .text-primary { @apply text-[#f0f6fc]; }
   .text-secondary { @apply text-[#7d8590]; }
   .text-muted { @apply text-[#484f58]; }
@@ -347,11 +547,26 @@
   .border-cloud { @apply border-[#3a6ff]; }
 }
 
-/* Cloud Computing Keyframe Animations */
+/* Advanced Cloud Computing Keyframe Animations */
+@keyframes cloudBackgroundPulse {
+  0%, 100% { opacity: 0.8; }
+  50% { opacity: 1; }
+}
+
+@keyframes cloudCursorFloat {
+  0%, 100% { transform: translate(-50%, -50%) scale(1) rotate(0deg); }
+  50% { transform: translate(-50%, -50%) scale(1.1) rotate(5deg); }
+}
+
 @keyframes gradientShift {
   0% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
+}
+
+@keyframes gradientShimmer {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
 }
 
 @keyframes float {
@@ -359,27 +574,28 @@
   50% { transform: translateY(-20px); }
 }
 
-@keyframes cloudFloat {
-  0%, 100% { transform: translateY(0px) scale(1.1); }
-  50% { transform: translateY(-10px) scale(1.15); }
+@keyframes intensiveCloudFloat {
+  0%, 100% { transform: scale(1.2) rotateY(15deg) translateZ(10px) translateY(0px); }
+  50% { transform: scale(1.25) rotateY(20deg) translateZ(15px) translateY(-5px); }
 }
 
-@keyframes cloudFloat1 {
-  0%, 100% { transform: translateY(0px) translateX(0px); }
-  33% { transform: translateY(-15px) translateX(5px); }
-  66% { transform: translateY(-5px) translateX(-3px); }
+@keyframes hyperCloudFloat1 {
+  0%, 100% { transform: translateY(0px) translateX(0px) rotateZ(0deg); }
+  25% { transform: translateY(-20px) translateX(10px) rotateZ(2deg); }
+  50% { transform: translateY(-10px) translateX(-5px) rotateZ(-1deg); }
+  75% { transform: translateY(-15px) translateX(8px) rotateZ(1deg); }
 }
 
-@keyframes cloudFloat2 {
-  0%, 100% { transform: translateY(0px) translateX(0px); }
-  25% { transform: translateY(-10px) translateX(-5px); }
-  75% { transform: translateY(-20px) translateX(3px); }
+@keyframes hyperCloudFloat2 {
+  0%, 100% { transform: translateY(0px) translateX(0px) rotateZ(0deg); }
+  33% { transform: translateY(-15px) translateX(-8px) rotateZ(-2deg); }
+  66% { transform: translateY(-25px) translateX(6px) rotateZ(1deg); }
 }
 
-@keyframes cloudFloat3 {
-  0%, 100% { transform: translateY(0px) translateX(0px); }
-  40% { transform: translateY(-25px) translateX(8px); }
-  80% { transform: translateY(-8px) translateX(-6px); }
+@keyframes hyperCloudFloat3 {
+  0%, 100% { transform: translateY(0px) translateX(0px) rotateZ(0deg); }
+  40% { transform: translateY(-30px) translateX(12px) rotateZ(3deg); }
+  80% { transform: translateY(-10px) translateX(-10px) rotateZ(-2deg); }
 }
 
 @keyframes fadeInUp {
@@ -415,96 +631,132 @@
   }
 }
 
-@keyframes cloudGlitter {
-  0% { transform: translateX(-100%) translateY(-100%) rotate(0deg); }
-  100% { transform: translateX(100%) translateY(100%) rotate(360deg); }
+@keyframes hyperCloudGlitter {
+  0% { transform: translate(-100%, -100%) rotate(0deg) scale(0.8); }
+  50% { transform: translate(0%, 0%) rotate(180deg) scale(1.2); }
+  100% { transform: translate(100%, 100%) rotate(360deg) scale(0.8); }
 }
 
-@keyframes cloudSparkle {
-  0%, 100% { opacity: 0; transform: scale(0.8); }
-  50% { opacity: 1; transform: scale(1.2); }
+@keyframes ultraCloudSparkle {
+  0%, 100% { opacity: 0; transform: scale(0.5) rotate(0deg); }
+  25% { opacity: 1; transform: scale(1.2) rotate(90deg); }
+  50% { opacity: 0.7; transform: scale(1) rotate(180deg); }
+  75% { opacity: 1; transform: scale(1.3) rotate(270deg); }
 }
 
-@keyframes cloudPulse {
-  0%, 100% { transform: scale(1); opacity: 0.3; }
-  50% { transform: scale(1.2); opacity: 0.7; }
+@keyframes cloudButtonPulse {
+  0%, 100% { transform: scale(1.5) rotate(180deg); opacity: 0.7; }
+  50% { transform: scale(1.8) rotate(360deg); opacity: 1; }
 }
 
 @keyframes cloudSweep {
-  0% { transform: translateX(-100%) rotate(45deg); }
-  100% { transform: translateX(200%) rotate(45deg); }
+  0% { transform: translateX(-150%) rotate(45deg); }
+  100% { transform: translateX(250%) rotate(45deg); }
 }
 
 @keyframes cloudDrift {
-  0% { transform: translateX(-100%); }
-  100% { transform: translateX(100%); }
+  0% { transform: translateX(-100%) scale(1); }
+  50% { transform: translateX(50%) scale(1.1); }
+  100% { transform: translateX(200%) scale(1); }
 }
 
-@keyframes cloudParticles {
+@keyframes hyperCloudParticles {
   0% { 
-    transform: translateY(100vh) translateX(0px); 
+    transform: translateY(100vh) translateX(0px) scale(0.5); 
     opacity: 0; 
   }
   10% { 
-    opacity: 1; 
+    opacity: 0.8; 
+    transform: translateY(90vh) translateX(10px) scale(0.7);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(50vh) translateX(50px) scale(1);
   }
   90% { 
-    opacity: 1; 
+    opacity: 0.8; 
+    transform: translateY(10vh) translateX(80px) scale(0.8);
   }
   100% { 
-    transform: translateY(-10vh) translateX(50px); 
+    transform: translateY(-10vh) translateX(100px) scale(0.3); 
     opacity: 0; 
   }
 }
 
-/* Animation classes */
+/* Enhanced Animation Classes */
 .animate-fade-in-up {
-  animation: fadeInUp 0.6s ease-out;
+  animation: fadeInUp 0.8s ease-out;
 }
 
 .animate-slide-in-left {
-  animation: slideInLeft 0.6s ease-out;
+  animation: slideInLeft 0.8s ease-out;
 }
 
 .animate-slide-in-right {
-  animation: slideInRight 0.6s ease-out;
+  animation: slideInRight 0.8s ease-out;
 }
 
 .animate-cloud-float {
-  animation: cloudFloat 3s ease-in-out infinite;
+  animation: intensiveCloudFloat 3s ease-in-out infinite;
 }
 
-/* Cloud Computing Hover Effects */
-.hover-lift {
-  @apply transition-transform duration-300 hover:-translate-y-2;
+.animate-hyper-float {
+  animation: hyperCloudFloat1 4s ease-in-out infinite;
 }
 
-.hover-glow {
-  @apply transition-all duration-300;
+/* Advanced Interactive Hover Effects */
+  .hover-lift {
+    @apply transition-all duration-300;
+    transform-style: preserve-3d;
+  }
+
+.hover-lift:hover {
+  transform: translateY(-8px) rotateX(5deg) scale(1.02);
 }
+
+  .hover-glow {
+    @apply transition-all duration-300;
+  }
 
 .hover-glow:hover {
-  box-shadow: 0 0 30px rgba(58, 166, 255, 0.4);
+  box-shadow: 0 15px 60px rgba(58, 166, 255, 0.5);
+  transform: translateY(-5px);
+}
+
+.hover-intense {
+  @apply transition-all duration-500;
+  transform-style: preserve-3d;
+}
+
+.hover-intense:hover {
+  box-shadow: 
+    0 25px 80px rgba(58, 166, 255, 0.6),
+    0 10px 40px rgba(0, 0, 0, 0.3),
+    inset 0 2px 0 rgba(255, 255, 255, 0.1);
+  transform: translateY(-15px) rotateX(12deg) rotateY(8deg) scale(1.05);
+}
+
+/* Enhanced focus styles with cloud theme */
+.focus-ring {
+  @apply focus:outline-none;
+  transition: all 0.3s ease;
+}
+
+.focus-ring:focus {
+  box-shadow: 
+    0 0 0 4px rgba(58, 166, 255, 0.3),
+    0 8px 25px rgba(58, 166, 255, 0.2);
   transform: translateY(-2px);
 }
 
-.hover-cloud {
-  @apply transition-all duration-300;
-}
-
-.hover-cloud:hover {
-  box-shadow: 
-    0 0 20px rgba(58, 166, 255, 0.3),
-    0 10px 30px rgba(0, 0, 0, 0.2);
-  transform: translateY(-5px) scale(1.02);
-}
-
-/* Custom focus styles with cloud theme */
-.focus-ring {
-  @apply focus:outline-none focus:ring-2 focus:ring-[#3a6ff] focus:ring-offset-2 focus:ring-offset-[#0d1117];
-}
-
 .focus-cloud {
-  @apply focus:outline-none focus:ring-2 focus:ring-[#3a6ff] focus:ring-offset-2 focus:ring-offset-[#0d1117];
-  box-shadow: 0 0 0 3px rgba(58, 166, 255, 0.1);
+  @apply focus:outline-none;
+  transition: all 0.3s ease;
+}
+
+.focus-cloud:focus {
+  box-shadow: 
+    0 0 0 6px rgba(58, 166, 255, 0.2),
+    0 12px 35px rgba(58, 166, 255, 0.3);
+  transform: translateY(-3px) scale(1.02);
 }

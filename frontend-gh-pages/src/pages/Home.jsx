@@ -108,21 +108,21 @@ const Home = () => {
               From concept to deployment, I bring ideas to life with precision and innovation.
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
+            <div className="flex flex-col sm:flex-row gap-6 justify-center mb-12">
               <Link
-                to="/login"
-                className="btn-primary group btn-glitter"
+                to="/portfolio"
+                className="btn-primary group btn-glitter hover-intense"
               >
-                <Cloud className="mr-2 h-5 w-5 cloud-icon" />
-                Get Started
-                <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform duration-200" />
+                <Cloud className="mr-3 h-6 w-6 cloud-icon" />
+                <span className="relative z-10">Get Started</span>
+                <ArrowRight className="ml-3 h-6 w-6 group-hover:translate-x-2 transition-transform duration-300" />
               </Link>
               <Link
                 to="/portfolio"
-                className="btn-outline group"
+                className="btn-outline group hover-intense"
               >
-                View Portfolio
-                <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform duration-200" />
+                <span className="relative z-10">View Portfolio</span>
+                <ArrowRight className="ml-3 h-6 w-6 group-hover:translate-x-2 transition-transform duration-300" />
               </Link>
             </div>
 
@@ -221,21 +221,21 @@ const Home = () => {
               Let's turn your vision into reality with cutting-edge technology.
             </p>
             
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <div className="flex flex-col sm:flex-row gap-6 justify-center">
               <Link
-                to="/login"
-                className="btn-primary group btn-glitter"
+                to="/portfolio"
+                className="btn-primary group btn-glitter hover-intense"
               >
-                <Cloud className="mr-2 h-5 w-5 cloud-icon" />
-                Start Your Journey
-                <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform duration-200" />
+                <Cloud className="mr-3 h-6 w-6 cloud-icon" />
+                <span className="relative z-10">Start Your Journey</span>
+                <ArrowRight className="ml-3 h-6 w-6 group-hover:translate-x-2 transition-transform duration-300" />
               </Link>
               <Link
                 to="/portfolio"
-                className="btn-secondary group"
+                className="btn-secondary group hover-intense"
               >
-                Explore My Work
-                <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform duration-200" />
+                <span className="relative z-10">Explore My Work</span>
+                <ArrowRight className="ml-3 h-6 w-6 group-hover:translate-x-2 transition-transform duration-300" />
               </Link>
             </div>
           </div>

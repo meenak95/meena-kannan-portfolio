@@ -247,7 +247,7 @@ const Portfolio = () => {
                 </div>
               )}
               
-              <div className="glass-card group hover-cloud transition-all duration-300 cursor-pointer">
+              <div className="glass-card group hover-intense transition-all duration-500 cursor-pointer">
                 {/* Project Image */}
                 <div className="relative overflow-hidden rounded-t-lg">
                   <img
@@ -359,15 +359,15 @@ const Portfolio = () => {
             ].map((skill) => {
               const IconComponent = skill.icon;
               return (
-                <div
-                  key={skill.name}
-                  className="flex flex-col items-center p-4 glass-card hover-cloud transition-all duration-300 cursor-pointer group"
-                >
-                  <IconComponent className={`w-12 h-12 ${skill.color} group-hover:scale-110 transition-transform duration-200 animate-cloud-float`} />
-                  <span className="text-secondary text-sm mt-2 text-center group-hover:text-primary transition-colors duration-200">
-                    {skill.name}
-                  </span>
-                </div>
+                                  <div
+                    key={skill.name}
+                    className="flex flex-col items-center p-6 glass-card hover-intense transition-all duration-500 cursor-pointer group"
+                  >
+                    <IconComponent className={`w-14 h-14 ${skill.color} group-hover:scale-125 transition-transform duration-300 animate-hyper-float`} />
+                    <span className="text-secondary text-sm mt-3 text-center group-hover:text-primary transition-colors duration-300 font-medium">
+                      {skill.name}
+                    </span>
+                  </div>
               );
             })}
           </div>
