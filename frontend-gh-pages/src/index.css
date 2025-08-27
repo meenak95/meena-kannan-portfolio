@@ -838,3 +838,53 @@
 
 .cube-step-btn:hover { background: rgba(33, 38, 45, 0.9); border-color: #484f58; }
 .cube-step-btn-active { background: rgba(35, 134, 54, 0.25); border-color: #2ea043; box-shadow: 0 0 0 2px rgba(35, 134, 54, 0.2) inset; }
+
+/* Progress ring around cube */
+.progress-ring {
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  right: -10px;
+  bottom: -10px;
+  border-radius: 9999px;
+  pointer-events: none;
+}
+
+.progress-ring-hole {
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  right: 6px;
+  bottom: 6px;
+  border-radius: 9999px;
+  background: #0d1117;
+  border: 1px solid #30363d;
+}
+
+/* Onboarding tooltip */
+.cube-tooltip {
+  position: absolute;
+  bottom: -2.25rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(13, 17, 23, 0.95);
+  border: 1px solid #30363d;
+  color: #f0f6fc;
+  padding: 0.4rem 0.6rem;
+  border-radius: 0.5rem;
+  font-size: 0.85rem;
+  white-space: nowrap;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+  z-index: 10;
+}
+
+.cube-tooltip::after {
+  content: '';
+  position: absolute;
+  top: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-bottom: 6px solid #30363d;
+}

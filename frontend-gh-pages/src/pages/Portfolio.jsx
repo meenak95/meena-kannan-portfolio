@@ -207,6 +207,10 @@ const Portfolio = () => {
   const Cube = ({ project }) => {
     const [rotation, setRotation] = useState({ x: 0, y: 0 });
     const [activeIndex, setActiveIndex] = useState(0); // 0..5 front,right,back,left,top,bottom
+    const [viewed, setViewed] = useState(new Set([0]));
+    const [isHovering, setIsHovering] = useState(false);
+    const [showTip, setShowTip] = useState(true);
+    const [velocity, setVelocity] = useState({ x: 0, y: 0 }); // for inertia
     const faces = ['Front', 'Right', 'Back', 'Left', 'Top', 'Bottom'];
 
     const setByIndex = (idx) => {
@@ -220,17 +224,19 @@ const Portfolio = () => {
         case 4: setRotation({ x: 90, y: 0 }); break;
         case 5: setRotation({ x: -90, y: 0 }); break;
       }
+      setViewed(prev => new Set(prev).add(i));
     };
 
     // Pointer drag
     useEffect(() => {
       const wrapper = document.getElementById(`cube-${project.id}`);
       if (!wrapper) return;
-      let startX = 0, startY = 0, dragging = false;
+      let startX = 0, startY = 0, dragging = false, lastX = 0, lastY = 0, lastT = 0;
       const onDown = (e) => {
         dragging = true;
         startX = e.touches ? e.touches[0].clientX : e.clientX;
         startY = e.touches ? e.touches[0].clientY : e.clientY;
+        lastX = startX; lastY = startY; lastT = performance.now();
       };
       const onMove = (e) => {
         if (!dragging) return;
@@ -238,6 +244,10 @@ const Portfolio = () => {
         const y = e.touches ? e.touches[0].clientY : e.clientY;
         const dx = x - startX;
         const dy = y - startY;
+        const now = performance.now();
+        const vx = (x - lastX) / Math.max(1, now - lastT);
+        const vy = (y - lastY) / Math.max(1, now - lastT);
+        lastX = x; lastY = y; lastT = now;
         if (Math.abs(dx) > 40 || Math.abs(dy) > 40) {
           if (Math.abs(dx) > Math.abs(dy)) {
             setByIndex(activeIndex + (dx > 0 ? 1 : -1));
@@ -245,6 +255,8 @@ const Portfolio = () => {
             setByIndex(activeIndex + (dy < 0 ? 4 : 5) - activeIndex); // up->top, down->bottom
           }
           dragging = false;
+          // inertia: continue slight rotation directionally
+          setVelocity({ x: vy * 200, y: vx * 200 });
         }
       };
       const onUp = () => { dragging = false; };
@@ -274,6 +286,28 @@ const Portfolio = () => {
       if (e.key === 'ArrowDown') setByIndex(5); // bottom
     };
 
+    // Auto-rotate with hover pause
+    useEffect(() => {
+      if (isHovering) return; // pause on hover
+      const id = setInterval(() => {
+        setByIndex(activeIndex + 1);
+      }, 4000);
+      return () => clearInterval(id);
+    }, [activeIndex, isHovering]);
+
+    // Inertia decay effect
+    useEffect(() => {
+      let animId;
+      const step = () => {
+        if (Math.abs(velocity.x) < 0.01 && Math.abs(velocity.y) < 0.01) return;
+        setRotation(r => ({ x: r.x + velocity.x * 0.02, y: r.y + velocity.y * 0.02 }));
+        setVelocity(v => ({ x: v.x * 0.92, y: v.y * 0.92 }));
+        animId = requestAnimationFrame(step);
+      };
+      animId = requestAnimationFrame(step);
+      return () => cancelAnimationFrame(animId);
+    }, [velocity.x, velocity.y]);
+
     const faceClass = 'glass-card p-0 bg-[#0d1117]/90 border-[#30363d]';
 
     return (
@@ -284,8 +318,22 @@ const Portfolio = () => {
           role="group"
           tabIndex={0}
           onKeyDown={onKeyDown}
+          onMouseEnter={() => { setIsHovering(true); setTimeout(() => setShowTip(false), 2500); }}
+          onMouseLeave={() => setIsHovering(false)}
           aria-label={`Project ${project.title} - drag, arrow keys, or use steps to explore faces`}
         >
+          {/* Progress Ring */}
+          <div className="progress-ring" aria-hidden>
+            <svg viewBox="0 0 120 120" className="w-full h-full">
+              <circle cx="60" cy="60" r="58" fill="none" stroke="#30363d" strokeWidth="2" />
+              <circle
+                cx="60" cy="60" r="58" fill="none"
+                stroke="#2ea043" strokeWidth="3" strokeLinecap="round"
+                style={{ strokeDasharray: `${(viewed.size/6)*365} 365`, transform: 'rotate(-90deg)', transformOrigin: '60px 60px' }}
+              />
+            </svg>
+          </div>
+          <div className="progress-ring-hole" />
           <div
             className="cube"
             style={{ transform: `translateZ(-130px) rotateX(${rotation.x}deg) rotateY(${rotation.y}deg)` }}
@@ -372,6 +420,13 @@ const Portfolio = () => {
               </button>
             ))}
           </div>
+
+          {/* Onboarding Tooltip */}
+          {showTip && (
+            <div className="cube-tooltip">
+              Drag, use arrow keys, or tap steps
+            </div>
+          )}
         </div>
       </div>
     );
