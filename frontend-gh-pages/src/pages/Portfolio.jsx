@@ -204,6 +204,104 @@ const Portfolio = () => {
     ? projects 
     : projects.filter(project => project.category === activeCategory);
 
+  const Cube = ({ project }) => {
+    const [rotation, setRotation] = useState({ x: 0, y: 0 });
+
+    const rotateLeft = () => setRotation(r => ({ ...r, y: r.y - 90 }));
+    const rotateRight = () => setRotation(r => ({ ...r, y: r.y + 90 }));
+    const rotateUp = () => setRotation(r => ({ ...r, x: r.x + 90 }));
+    const rotateDown = () => setRotation(r => ({ ...r, x: r.x - 90 }));
+
+    const faceClass = 'glass-card p-0 bg-[#0d1117]/90 border-[#30363d]';
+
+    return (
+      <div className="cube-scene">
+        <div className="cube-wrapper">
+          <div
+            className="cube"
+            style={{ transform: `translateZ(-130px) rotateX(${rotation.x}deg) rotateY(${rotation.y}deg)` }}
+          >
+            {/* Front: Title & summary */}
+            <div className={`cube-face cube-face-front ${faceClass}`}>
+              <div className="cube-face-content">
+                <img src={project.image} alt="cover" className="w-full h-24 object-cover" />
+                <h3 className="text-lg font-bold text-primary mt-1">{project.title}</h3>
+                <p className="text-secondary text-sm line-clamp-3">{project.description}</p>
+              </div>
+            </div>
+
+            {/* Back: Links */}
+            <div className={`cube-face cube-face-back ${faceClass}`}>
+              <div className="cube-face-content items-start justify-center">
+                <h4 className="text-primary font-semibold">Links</h4>
+                <div className="flex flex-col gap-2 mt-2">
+                  <a href={project.githubUrl} target="_blank" rel="noopener noreferrer" className="btn-secondary text-center">View Code</a>
+                  {project.liveUrl ? (
+                    <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className="btn-primary text-center">Live Demo</a>
+                  ) : (
+                    <div className="px-4 py-2 bg-[#f78166] text-white rounded-lg text-center">Enterprise Project</div>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            {/* Right: Technologies */}
+            <div className={`cube-face cube-face-right ${faceClass}`}>
+              <div className="cube-face-content">
+                <h4 className="text-primary font-semibold">Technologies</h4>
+                <div className="flex flex-wrap gap-2 mt-2">
+                  {project.technologies.map((t) => (
+                    <span key={t} className="px-2 py-1 bg-[#21262d] text-secondary rounded text-xs">{t}</span>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Left: Stats */}
+            <div className={`cube-face cube-face-left ${faceClass}`}>
+              <div className="cube-face-content">
+                <h4 className="text-primary font-semibold">Stats</h4>
+                <div className="text-secondary text-sm mt-2">
+                  <div>Rating: <span className="text-[#238636] font-medium">{project.rating}</span> ★</div>
+                  <div>Stars: <span className="font-medium">{project.stars}</span></div>
+                  <div>Category: <span className="font-medium capitalize">{project.category}</span></div>
+                </div>
+              </div>
+            </div>
+
+            {/* Top: Highlights */}
+            <div className={`cube-face cube-face-top ${faceClass}`}>
+              <div className="cube-face-content">
+                <h4 className="text-primary font-semibold">Highlights</h4>
+                <ul className="list-disc list-inside text-secondary text-sm mt-1">
+                  <li>High availability & scalable architecture</li>
+                  <li>CI/CD with blue/green deployments</li>
+                  <li>Observability: metrics, logs, tracing</li>
+                </ul>
+              </div>
+            </div>
+
+            {/* Bottom: Notes */}
+            <div className={`cube-face cube-face-bottom ${faceClass}`}>
+              <div className="cube-face-content">
+                <h4 className="text-primary font-semibold">Notes</h4>
+                <p className="text-secondary text-sm">Enterprise context may restrict live demo access. Code samples are representative where possible.</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Controls */}
+          <div className="cube-controls">
+            <button className="ctrl-left" onClick={rotateLeft} aria-label="Rotate Left">◀</button>
+            <button className="ctrl-right" onClick={rotateRight} aria-label="Rotate Right">▶</button>
+            <button className="ctrl-up" onClick={rotateUp} aria-label="Rotate Up">▲</button>
+            <button className="ctrl-down" onClick={rotateDown} aria-label="Rotate Down">▼</button>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   return (
     <div className={`min-h-screen bg-primary transition-all duration-1000 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -235,94 +333,17 @@ const Portfolio = () => {
           ))}
         </div>
 
-        {/* Projects Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {/* Projects Grid - 3D Rotatable Cubes */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
           {filteredProjects.map((project) => (
-            <div key={project.id} className="space-y-4">
-              {/* Enterprise Label Above Container */}
+            <div key={project.id}>
               {project.isEnterprise && (
-                <div className="flex items-center gap-2 text-sm text-secondary">
+                <div className="flex items-center gap-2 text-sm text-secondary mb-2">
                   <div className="w-2 h-2 bg-[#f78166] rounded-full"></div>
                   <span className="font-medium">Enterprise Project</span>
                 </div>
               )}
-              
-              <div className="glass-card group hover-intense transition-all duration-500 cursor-pointer">
-                {/* Project Image */}
-                <div className="relative overflow-hidden rounded-t-lg">
-                  <img
-                    src={project.image}
-                    alt={project.title}
-                    className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-300"
-                  />
-                  {project.featured && !project.isEnterprise && (
-                    <div className="absolute top-4 right-4 bg-[#238636] text-white px-3 py-1 rounded-full text-sm font-medium">
-                      Featured
-                    </div>
-                  )}
-                </div>
-
-                {/* Project Content */}
-                <div className="p-6">
-                  <h3 className="text-xl font-bold text-primary mb-2 group-hover:text-[#238636] transition-colors duration-200">
-                    {project.title}
-                  </h3>
-                  <p className="text-secondary mb-4 line-clamp-3">
-                    {project.description}
-                  </p>
-
-                  {/* Technologies */}
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    {project.technologies.map((tech) => {
-                      const IconComponent = getIconForTechnology(tech);
-                      return (
-                        <span
-                          key={tech}
-                          className="flex items-center gap-2 px-3 py-1 bg-[#21262d] text-secondary rounded-full text-sm"
-                        >
-                          <IconComponent className="w-4 h-4" />
-                          {tech}
-                        </span>
-                      );
-                    })}
-                  </div>
-
-                  {/* Project Stats */}
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="flex items-center gap-2">
-                      <span className="text-[#238636] font-medium">{project.rating}</span>
-                      <span className="text-secondary">★</span>
-                      <span className="text-secondary text-sm">({project.stars})</span>
-                    </div>
-                  </div>
-
-                  {/* Action Buttons */}
-                  <div className="flex gap-3">
-                    <a
-                      href={project.githubUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex-1 bg-[#21262d] hover:bg-[#30363d] text-primary hover:text-[#238636] px-4 py-2 rounded-lg text-center font-medium transition-all duration-200"
-                    >
-                      View Code
-                    </a>
-                    {project.liveUrl ? (
-                      <a
-                        href={project.liveUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex-1 bg-[#238636] hover:bg-[#2ea043] text-white px-4 py-2 rounded-lg text-center font-medium transition-all duration-200"
-                      >
-                        Live Demo
-                      </a>
-                    ) : (
-                      <div className="flex-1 bg-[#f78166] text-white px-4 py-2 rounded-lg text-center font-medium cursor-not-allowed">
-                        Enterprise Project
-                      </div>
-                    )}
-                  </div>
-                </div>
-              </div>
+              <Cube project={project} />
             </div>
           ))}
         </div>
