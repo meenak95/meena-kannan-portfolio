@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import SciFiBackground from '../components/SciFiBackground'
 import {
   SiReact,
   SiNodedotjs,
@@ -395,9 +396,15 @@ const Portfolio = () => {
               <div className="cube-face-content">
                 <h4 className="text-primary font-semibold">Technologies</h4>
                 <div className="flex flex-wrap gap-2 mt-2">
-                  {project.technologies.map((t) => (
-                    <span key={t} className="px-2 py-1 bg-[#21262d] text-secondary rounded text-xs">{t}</span>
-                  ))}
+                  {project.technologies.map((t) => {
+                    const TechIcon = getIconForTechnology(t);
+                    return (
+                      <span key={t} className="neon-chip">
+                        <TechIcon className="w-4 h-4 text-[#58a6ff]" />
+                        {t}
+                      </span>
+                    );
+                  })}
                 </div>
               </div>
             </div>
@@ -450,15 +457,17 @@ const Portfolio = () => {
 
   return (
     <div className={`min-h-screen bg-primary transition-all duration-1000 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
+      <div className="relative">
+        <SciFiBackground />
+      </div>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        {/* Header */}
+        {/* Hero */}
         <div className="text-center mb-16">
-          <h1 className="text-4xl md:text-6xl font-bold text-primary mb-6">
-            My Portfolio
+          <h1 className="text-4xl md:text-6xl font-bold text-primary neon-text mb-3">
+            Projects, Reimagined
           </h1>
           <p className="text-xl text-secondary max-w-3xl mx-auto">
-            A showcase of my projects, skills, and experience in full-stack development, 
-            mobile apps, and cloud infrastructure.
+            Sci‑fi inspired showcase of high‑impact systems and experiences
           </p>
         </div>
 
@@ -494,18 +503,18 @@ const Portfolio = () => {
           ))}
         </div>
 
-              {/* Skills Section */}
-      <div className="mt-20 relative">
-        {/* Cloud Background for Skills */}
-        <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute top-10 left-10 w-40 h-40 bg-gradient-to-r from-[#3a6ff]/5 to-transparent rounded-full blur-3xl float-delay-1"></div>
-          <div className="absolute bottom-10 right-10 w-32 h-32 bg-gradient-to-l from-[#58a6ff]/8 to-transparent rounded-full blur-2xl float-delay-2"></div>
-          <div className="cloud-particles"></div>
-        </div>
-        
-        <h2 className="text-3xl font-bold text-primary text-center mb-12 relative">
-          <span className="gradient-text">Cloud-Powered</span> Technical Skills
-        </h2>
+        {/* Skills Section */}
+        <div className="mt-20 relative">
+          {/* Cloud Background for Skills */}
+          <div className="absolute inset-0 overflow-hidden">
+            <div className="absolute top-10 left-10 w-40 h-40 bg-gradient-to-r from-[#3a6ff]/5 to-transparent rounded-full blur-3xl float-delay-1"></div>
+            <div className="absolute bottom-10 right-10 w-32 h-32 bg-gradient-to-l from-[#58a6ff]/8 to-transparent rounded-full blur-2xl float-delay-2"></div>
+            <div className="cloud-particles"></div>
+          </div>
+          
+          <h2 className="text-3xl font-bold text-primary text-center mb-12 relative">
+            <span className="gradient-text">Cloud-Powered</span> Technical Skills
+          </h2>
           
           <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
             {[
@@ -526,15 +535,17 @@ const Portfolio = () => {
             ].map((skill) => {
               const IconComponent = skill.icon;
               return (
-                                  <div
-                    key={skill.name}
-                    className="flex flex-col items-center p-6 glass-card hover-intense transition-all duration-500 cursor-pointer group"
-                  >
-                    <IconComponent className={`w-14 h-14 ${skill.color} group-hover:scale-125 transition-transform duration-300 animate-hyper-float`} />
-                    <span className="text-secondary text-sm mt-3 text-center group-hover:text-primary transition-colors duration-300 font-medium">
-                      {skill.name}
-                    </span>
+                <div
+                  key={skill.name}
+                  className="flex flex-col items-center p-6 glass-card neon-border holo-tilt hover-intense transition-all duration-500 cursor-pointer group"
+                >
+                  <div className="icon-wrap">
+                    <IconComponent className={`w-6 h-6 ${skill.color}`} />
                   </div>
+                  <span className="text-secondary text-sm mt-3 text-center group-hover:text-primary transition-colors duration-300 font-medium">
+                    {skill.name}
+                  </span>
+                </div>
               );
             })}
           </div>

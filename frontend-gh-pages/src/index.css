@@ -961,3 +961,18 @@
   filter: perspective(800px) rotateX(60deg);
   transform-origin: center top;
 }
+
+/* Neon chips and icon wrappers */
+.neon-chip {
+  @apply inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs;
+  background: rgba(13,17,23,0.7);
+  border: 1px solid #30363d;
+  box-shadow: 0 0 12px rgba(88,166,255,0.15) inset;
+}
+
+.icon-wrap {
+  width: 36px; height: 36px;
+  display: inline-flex; align-items: center; justify-content: center;
+  border-radius: 0.75rem; border: 1px solid #30363d; background: #0d1117;
+  box-shadow: 0 0 14px rgba(88,166,255,0.2) inset;
+}
