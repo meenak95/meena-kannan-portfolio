@@ -1,13 +1,54 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { Activity, Shield, ArrowRight, GitBranch, Cloud, Gauge, AlertTriangle } from 'lucide-react'
+import { Activity, Shield, ArrowRight, GitBranch, Cloud, Gauge, AlertTriangle, Wand2, Rocket, Plug } from 'lucide-react'
 import Marquee from '../components/Marquee'
+const Testimonials = () => (
+  <section className="py-20 bg-secondary/30">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="text-center mb-14">
+        <h2 className="text-4xl md:text-5xl font-bold text-primary mb-4">What Clients Say</h2>
+        <p className="text-xl text-secondary">Trust built on outcomes</p>
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {[{
+          quote: 'Delivered beyond expectations — performance improved and deployments became painless.',
+          name: 'Product Lead, Public Sector',
+        }, {
+          quote: 'Brought clarity to complex systems and shipped iteratively with quality.',
+          name: 'Engineering Manager, Fintech',
+        }, {
+          quote: 'Measurable impact on reliability and speed. Great partner to work with.',
+          name: 'CTO, Retail Analytics',
+        }].map((t, i) => (
+          <div key={i} className="glass-card glow-card p-6 reveal-up">
+            <div className="text-secondary mb-3">“{t.quote}”</div>
+            <div className="text-primary font-medium">{t.name}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+)
 
 const Home = () => {
   const [isVisible, setIsVisible] = useState(false)
 
   useEffect(() => {
     setIsVisible(true)
+  }, [])
+
+  // Reveal on scroll for elements with .reveal-up
+  useEffect(() => {
+    const els = Array.from(document.querySelectorAll('.reveal-up'))
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('in-view')
+        }
+      })
+    }, { threshold: 0.2 })
+    els.forEach(el => io.observe(el))
+    return () => io.disconnect()
   }, [])
 
   const features = [
@@ -147,6 +188,36 @@ const Home = () => {
         </div>
       </section>
 
+      {/* How I Work (Locofy-inspired steps) */}
+      <section className="py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-14">
+            <h2 className="text-4xl md:text-5xl font-bold text-primary mb-4">How I Work</h2>
+            <p className="text-xl text-secondary">A clear path from design to reliable production</p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {[{
+              icon: <Wand2 className="h-6 w-6" />, title: 'Design & Scope', desc: 'Define goals, success metrics, and architecture with lightweight prototypes.'
+            },{
+              icon: <Plug className="h-6 w-6" />, title: 'Integrate & Automate', desc: 'Wire CI/CD, observability, and guardrails to ship safely and often.'
+            },{
+              icon: <Rocket className="h-6 w-6" />, title: 'Ship & Iterate', desc: 'Release with progressive strategies, learn from data, and improve.'
+            }].map((s, i) => (
+              <div key={i} className="glass-card glow-card p-6 reveal-up">
+                <div className="flex items-center justify-between mb-3">
+                  <div className="w-10 h-10 rounded-lg bg-[#21262d] border border-[#30363d] flex items-center justify-center text-[#58a6ff]">
+                    {s.icon}
+                  </div>
+                  <div className="text-secondary">Step {i+1}</div>
+                </div>
+                <h3 className="text-lg font-semibold text-primary mb-2">{s.title}</h3>
+                <p className="text-secondary">{s.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Metrics Section */}
       <section className="py-20 bg-secondary/30 relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -177,8 +248,36 @@ const Home = () => {
         </div>
       </section>
 
+      {/* Case Studies */}
+      <section className="py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-14">
+            <h2 className="text-4xl md:text-5xl font-bold text-primary mb-4">Case Studies</h2>
+            <p className="text-xl text-secondary">Selected work with measurable outcomes</p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {[{
+              title: 'VRLS 2.0', desc: '70% latency reduction; zero-downtime deployments.',
+            },{
+              title: 'Promo Power', desc: '18% forecast accuracy lift; 12% inventory reduction.',
+            },{
+              title: 'HDB Resale Portal', desc: 'Processing time from 3 days to under 2 hours.',
+            }].map((c, i) => (
+              <Link to="/portfolio" key={i} className="glass-card glow-card p-6 reveal-up hover-intense">
+                <div className="text-sm text-secondary mb-2">Case Study</div>
+                <h3 className="text-xl font-semibold text-primary mb-2">{c.title}</h3>
+                <p className="text-secondary">{c.desc}</p>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials */}
+      <Testimonials />
+
       {/* CTA Section */}
-      <section className="py-20 relative overflow-hidden">
+      <section className="py-20 relative overflow-hidden reveal-up">
         {/* Background gradient */}
         <div className="absolute inset-0 bg-gradient-to-br from-[#238636]/10 via-[#2ea043]/10 to-[#3fb950]/10"></div>
         
