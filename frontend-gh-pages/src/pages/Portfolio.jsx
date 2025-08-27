@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 // import SciFiBackground from '../components/SciFiBackground'
+import ProjectCard from '../components/ProjectCard'
 import {
   SiReact,
   SiNodedotjs,
