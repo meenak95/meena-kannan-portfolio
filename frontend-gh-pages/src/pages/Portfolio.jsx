@@ -243,7 +243,10 @@ const Portfolio = () => {
     const [activeIndex, setActiveIndex] = useState(0); // 0..5 front,right,back,left,top,bottom
     const [viewed, setViewed] = useState(new Set([0]));
     const [isHovering, setIsHovering] = useState(false);
-    const [showTip, setShowTip] = useState(true);
+    const [showTip, setShowTip] = useState(() => {
+      const k = `cubeTipSeen-${project.id}`;
+      return !sessionStorage.getItem(k);
+    });
     const faces = ['Front', 'Right', 'Back', 'Left', 'Top', 'Bottom'];
 
     const setByIndex = (idx) => {
@@ -336,7 +339,14 @@ const Portfolio = () => {
           role="group"
           tabIndex={0}
           onKeyDown={onKeyDown}
-          onMouseEnter={() => { setIsHovering(true); setTimeout(() => setShowTip(false), 2500); }}
+          onMouseEnter={() => { 
+            setIsHovering(true); 
+            if (showTip) {
+              const k = `cubeTipSeen-${project.id}`;
+              sessionStorage.setItem(k, '1');
+              setTimeout(() => setShowTip(false), 1600);
+            }
+          }}
           onMouseLeave={() => setIsHovering(false)}
           aria-label={`Project ${project.title} - drag, arrow keys, or use steps to explore faces`}
         >
@@ -430,7 +440,7 @@ const Portfolio = () => {
           {/* Onboarding Tooltip */}
           {showTip && (
             <div className="cube-tooltip">
-              Drag, use arrow keys, or tap steps
+              Tip: Drag or use arrow keys
             </div>
           )}
         </div>
