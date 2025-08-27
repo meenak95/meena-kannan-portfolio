@@ -11,7 +11,7 @@ const ProjectCard = ({ project, techToIcon }) => {
   }
 
   return (
-    <div className="group glass-card neon-border glow-card overflow-hidden hover-intense holo-tilt transition-all duration-500" onMouseMove={onMove}>
+    <div className="group glass-card neon-border glow-card holo-border radial-light overflow-hidden hover-intense holo-tilt transition-all duration-500" onMouseMove={onMove}>
       <div className="relative h-44 w-full overflow-hidden">
         <img src={project.image} alt={project.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
         <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
@@ -54,11 +54,19 @@ const ProjectCard = ({ project, techToIcon }) => {
         </div>
 
         <div className="flex gap-3">
-          <a href={project.githubUrl} target="_blank" rel="noopener noreferrer" className="flex-1 btn-secondary inline-flex items-center justify-center gap-2">
+          <a href={project.githubUrl} target="_blank" rel="noopener noreferrer" className="flex-1 btn-secondary magnet inline-flex items-center justify-center gap-2" onMouseMove={(e) => {
+            const r = e.currentTarget.getBoundingClientRect();
+            const mx = ((e.clientX - r.left) / r.width) * 100; const my = ((e.clientY - r.top) / r.height) * 100;
+            e.currentTarget.style.setProperty('--mx', mx + '%'); e.currentTarget.style.setProperty('--my', my + '%');
+          }}>
             <Github className="w-4 h-4" /> Code
           </a>
           {project.liveUrl ? (
-            <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className="flex-1 btn-primary inline-flex items-center justify-center gap-2">
+            <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className="flex-1 btn-primary magnet inline-flex items-center justify-center gap-2" onMouseMove={(e) => {
+              const r = e.currentTarget.getBoundingClientRect();
+              const mx = ((e.clientX - r.left) / r.width) * 100; const my = ((e.clientY - r.top) / r.height) * 100;
+              e.currentTarget.style.setProperty('--mx', mx + '%'); e.currentTarget.style.setProperty('--my', my + '%');
+            }}>
               <ExternalLink className="w-4 h-4" /> Live
             </a>
           ) : (

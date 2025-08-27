@@ -227,18 +227,17 @@ const Portfolio = () => {
         </div>
 
         {/* Category Filter */}
-        <div className="flex flex-wrap justify-center gap-4 mb-12">
+        <div className="flex flex-wrap justify-center gap-3 mb-12">
           {['all', 'fullstack', 'frontend', 'backend', 'ai', 'devops'].map((category) => (
             <button
               key={category}
               onClick={() => setActiveCategory(category)}
-              className={`px-6 py-3 rounded-lg font-medium transition-all duration-200 ${
-                activeCategory === category
-                  ? 'bg-[#238636] text-white shadow-lg'
-                  : 'bg-[#21262d] text-secondary hover:text-primary hover:bg-[#30363d]'
+              className={`neon-chip ${
+                activeCategory === category ? 'border-[#238636] text-white' : 'text-secondary hover:text-primary'
               }`}
             >
-              {category.charAt(0).toUpperCase() + category.slice(1)}
+              {category === 'ai' ? '🤖' : category === 'frontend' ? '🎨' : category === 'backend' ? '🛠️' : category === 'devops' ? '🚀' : category === 'fullstack' ? '🧩' : '✨'}
+              <span className="font-medium">{category.charAt(0).toUpperCase() + category.slice(1)}</span>
             </button>
           ))}
         </div>
