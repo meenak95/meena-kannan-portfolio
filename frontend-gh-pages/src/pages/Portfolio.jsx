@@ -210,7 +210,6 @@ const Portfolio = () => {
     const [viewed, setViewed] = useState(new Set([0]));
     const [isHovering, setIsHovering] = useState(false);
     const [showTip, setShowTip] = useState(true);
-    const [velocity, setVelocity] = useState({ x: 0, y: 0 }); // for inertia
     const faces = ['Front', 'Right', 'Back', 'Left', 'Top', 'Bottom'];
 
     const setByIndex = (idx) => {
@@ -227,16 +226,15 @@ const Portfolio = () => {
       setViewed(prev => new Set(prev).add(i));
     };
 
-    // Pointer drag
+    // Pointer drag (no inertia)
     useEffect(() => {
       const wrapper = document.getElementById(`cube-${project.id}`);
       if (!wrapper) return;
-      let startX = 0, startY = 0, dragging = false, lastX = 0, lastY = 0, lastT = 0;
+      let startX = 0, startY = 0, dragging = false;
       const onDown = (e) => {
         dragging = true;
         startX = e.touches ? e.touches[0].clientX : e.clientX;
         startY = e.touches ? e.touches[0].clientY : e.clientY;
-        lastX = startX; lastY = startY; lastT = performance.now();
       };
       const onMove = (e) => {
         if (!dragging) return;
@@ -244,10 +242,6 @@ const Portfolio = () => {
         const y = e.touches ? e.touches[0].clientY : e.clientY;
         const dx = x - startX;
         const dy = y - startY;
-        const now = performance.now();
-        const vx = (x - lastX) / Math.max(1, now - lastT);
-        const vy = (y - lastY) / Math.max(1, now - lastT);
-        lastX = x; lastY = y; lastT = now;
         if (Math.abs(dx) > 40 || Math.abs(dy) > 40) {
           if (Math.abs(dx) > Math.abs(dy)) {
             setByIndex(activeIndex + (dx > 0 ? 1 : -1));
@@ -255,8 +249,6 @@ const Portfolio = () => {
             setByIndex(activeIndex + (dy < 0 ? 4 : 5) - activeIndex); // up->top, down->bottom
           }
           dragging = false;
-          // inertia: continue slight rotation directionally
-          setVelocity({ x: vy * 200, y: vx * 200 });
         }
       };
       const onUp = () => { dragging = false; };
@@ -286,27 +278,14 @@ const Portfolio = () => {
       if (e.key === 'ArrowDown') setByIndex(5); // bottom
     };
 
-    // Auto-rotate with hover pause
+    // Auto-rotate with hover pause (slower)
     useEffect(() => {
       if (isHovering) return; // pause on hover
       const id = setInterval(() => {
         setByIndex(activeIndex + 1);
-      }, 4000);
+      }, 6000);
       return () => clearInterval(id);
     }, [activeIndex, isHovering]);
-
-    // Inertia decay effect
-    useEffect(() => {
-      let animId;
-      const step = () => {
-        if (Math.abs(velocity.x) < 0.01 && Math.abs(velocity.y) < 0.01) return;
-        setRotation(r => ({ x: r.x + velocity.x * 0.02, y: r.y + velocity.y * 0.02 }));
-        setVelocity(v => ({ x: v.x * 0.92, y: v.y * 0.92 }));
-        animId = requestAnimationFrame(step);
-      };
-      animId = requestAnimationFrame(step);
-      return () => cancelAnimationFrame(animId);
-    }, [velocity.x, velocity.y]);
 
     const faceClass = 'glass-card p-0 bg-[#0d1117]/90 border-[#30363d]';
 
@@ -407,19 +386,7 @@ const Portfolio = () => {
             </div>
           </div>
 
-          {/* Stepper guidance */}
-          <div className="cube-stepper">
-            {faces.map((label, idx) => (
-              <button
-                key={label}
-                className={`cube-step-btn ${activeIndex === idx ? 'cube-step-btn-active' : ''}`}
-                onClick={() => setByIndex(idx)}
-                aria-label={`Show ${label} face`}
-              >
-                {label[0]}
-              </button>
-            ))}
-          </div>
+          {/* Stepper removed for minimal, non-distracting UI */}
 
           {/* Onboarding Tooltip */}
           {showTip && (
