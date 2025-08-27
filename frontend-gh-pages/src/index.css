@@ -863,3 +863,65 @@
   border-right: 6px solid transparent;
   border-bottom: 6px solid #30363d;
 }
+
+/* Locofy-inspired additions */
+.mesh-hero {
+  position: relative;
+  background:
+    radial-gradient(1200px circle at 10% 10%, rgba(46, 160, 67, 0.12), transparent 40%),
+    radial-gradient(900px circle at 90% 20%, rgba(88, 166, 255, 0.12), transparent 40%),
+    radial-gradient(1200px circle at 30% 90%, rgba(163, 113, 247, 0.12), transparent 40%),
+    linear-gradient(180deg, #0d1117 0%, #0d1117 60%, #0f1420 100%);
+}
+
+.mesh-hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(1200px circle at var(--mx, 50%) var(--my, 50%), rgba(46, 160, 67, 0.1), transparent 35%);
+  transition: opacity 0.3s ease;
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.parallax-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.glow-card {
+  position: relative;
+}
+
+.glow-card::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: 1rem;
+  background: radial-gradient(600px circle at var(--gx, 50%) var(--gy, 50%), rgba(46, 160, 67, 0.25), transparent 40%);
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.glow-card:hover::before { opacity: 1; }
+
+.reveal-up { opacity: 0; transform: translateY(16px); transition: all 0.6s ease; }
+.reveal-up.in-view { opacity: 1; transform: translateY(0); }
+
+.marquee {
+  display: flex;
+  overflow: hidden;
+  mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+}
+
+.marquee-track {
+  display: flex;
+  gap: 2rem;
+  animation: marquee 16s linear infinite;
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}

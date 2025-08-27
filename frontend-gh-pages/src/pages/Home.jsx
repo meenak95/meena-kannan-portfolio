@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { Activity, Shield, ArrowRight, GitBranch, Cloud, Gauge, AlertTriangle } from 'lucide-react'
+import Marquee from '../components/Marquee'
 
 const Home = () => {
   const [isVisible, setIsVisible] = useState(false)
@@ -61,9 +62,18 @@ const Home = () => {
 
   return (
     <div className="min-h-screen pt-16">
-      {/* Hero Section */}
-      <section className="relative overflow-hidden py-20 lg:py-32">
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      {/* Hero Section - Locofy-inspired mesh + parallax */}
+      <section className="relative overflow-hidden py-20 lg:py-32 mesh-hero">
+        <div className="parallax-layer" aria-hidden></div>
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center"
+          onMouseMove={(e) => {
+            const r = e.currentTarget.getBoundingClientRect();
+            const mx = ((e.clientX - r.left) / r.width) * 100;
+            const my = ((e.clientY - r.top) / r.height) * 100;
+            document.documentElement.style.setProperty('--mx', mx + '%');
+            document.documentElement.style.setProperty('--my', my + '%');
+          }}
+        >
           <div className={`transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
             <div className="inline-flex items-center space-x-2 px-4 py-2 bg-[#21262d] border border-[#30363d] rounded-full text-secondary text-sm mb-8">
               <Activity className="h-4 w-4 text-[#238636]" />
@@ -99,17 +109,9 @@ const Home = () => {
               </Link>
             </div>
 
-            {/* Platforms preview */}
-            <div className="flex flex-wrap justify-center gap-4">
-              {platforms.map((tech, index) => (
-                <div
-                  key={index}
-                  className={`px-4 py-2 bg-gradient-to-r ${tech.color} rounded-lg text-white font-medium text-sm flex items-center space-x-2 hover:scale-105 transition-transform duration-200`}
-                >
-                  <span>{tech.icon}</span>
-                  <span>{tech.name}</span>
-                </div>
-              ))}
+            {/* Marquee */}
+            <div className="mt-8">
+              <Marquee />
             </div>
           </div>
         </div>
@@ -131,7 +133,7 @@ const Home = () => {
             {features.map((feature, index) => (
               <div 
                 key={index} 
-                className={`stat-card animate-fade-in-up ${feature.delay}`}
+                className={`stat-card animate-fade-in-up glow-card ${feature.delay}`}
                 style={{ animationDelay: `${index * 100}ms` }}
               >
                 <div className={`inline-flex p-4 rounded-2xl bg-gradient-to-br ${feature.color} text-white mb-4 group-hover:scale-110 transition-transform duration-300`}>
