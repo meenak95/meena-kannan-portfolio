@@ -204,7 +204,41 @@ const Portfolio = () => {
     ? projects 
     : projects.filter(project => project.category === activeCategory);
 
-  const Cube = ({ project }) => {
+  // Track which project cube is active (auto-rotates)
+  const [activeProjectId, setActiveProjectId] = useState(() => (filteredProjects[0]?.id ?? null));
+  const containerRefs = React.useRef({});
+
+  useEffect(() => {
+    // Compute active cube based on proximity to viewport center
+    const computeActive = () => {
+      if (!filteredProjects.length) return;
+      let bestId = filteredProjects[0].id;
+      let bestDist = Infinity;
+      const viewportMid = window.innerHeight / 2;
+      filteredProjects.forEach(p => {
+        const el = containerRefs.current[p.id];
+        if (!el) return;
+        const rect = el.getBoundingClientRect();
+        const mid = rect.top + rect.height / 2;
+        const dist = Math.abs(mid - viewportMid);
+        if (dist < bestDist) { bestDist = dist; bestId = p.id; }
+      });
+      setActiveProjectId(bestId);
+    };
+
+    const handle = () => computeActive();
+    computeActive();
+    window.addEventListener('scroll', handle, { passive: true });
+    window.addEventListener('resize', handle);
+    const id = setTimeout(computeActive, 50);
+    return () => {
+      window.removeEventListener('scroll', handle);
+      window.removeEventListener('resize', handle);
+      clearTimeout(id);
+    };
+  }, [activeCategory, filteredProjects.map(p => p.id).join(',')]);
+
+  const Cube = ({ project, isActive }) => {
     const [rotation, setRotation] = useState({ x: 0, y: 0 });
     const [activeIndex, setActiveIndex] = useState(0); // 0..5 front,right,back,left,top,bottom
     const [viewed, setViewed] = useState(new Set([0]));
@@ -280,12 +314,17 @@ const Portfolio = () => {
 
     // Auto-rotate with hover pause (slower)
     useEffect(() => {
-      if (isHovering) return; // pause on hover
+      if (isHovering || !isActive) return; // pause on hover or when inactive
       const id = setInterval(() => {
         setByIndex(activeIndex + 1);
       }, 6000);
       return () => clearInterval(id);
-    }, [activeIndex, isHovering]);
+    }, [activeIndex, isHovering, isActive]);
+
+    // Reset to default face when inactive
+    useEffect(() => {
+      if (!isActive) setByIndex(0);
+    }, [isActive]);
 
     const faceClass = 'glass-card p-0 bg-[#0d1117]/90 border-[#30363d]';
 
@@ -433,14 +472,14 @@ const Portfolio = () => {
         {/* Projects Grid - 3D Rotatable Cubes */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
           {filteredProjects.map((project) => (
-            <div key={project.id}>
+            <div key={project.id} ref={(el) => { containerRefs.current[project.id] = el; }}>
               {project.isEnterprise && (
                 <div className="flex items-center gap-2 text-sm text-secondary mb-2">
                   <div className="w-2 h-2 bg-[#f78166] rounded-full"></div>
                   <span className="font-medium">Enterprise Project</span>
                 </div>
               )}
-              <Cube project={project} />
+              <Cube project={project} isActive={project.id === activeProjectId} />
             </div>
           ))}
         </div>
