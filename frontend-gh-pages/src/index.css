@@ -810,3 +810,31 @@
 .cube-controls .ctrl-right { position: absolute; right: -0.75rem; }
 .cube-controls .ctrl-up { position: absolute; top: -0.75rem; }
 .cube-controls .ctrl-down { position: absolute; bottom: -0.75rem; }
+
+/* Cube stepper (modern guidance) */
+.cube-stepper {
+  position: absolute;
+  bottom: 0.5rem;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.cube-step-btn {
+  width: 36px;
+  height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(13, 17, 23, 0.7);
+  border: 1px solid #30363d;
+  color: #f0f6fc;
+  border-radius: 0.75rem;
+  transition: all 0.2s ease;
+}
+
+.cube-step-btn:hover { background: rgba(33, 38, 45, 0.9); border-color: #484f58; }
+.cube-step-btn-active { background: rgba(35, 134, 54, 0.25); border-color: #2ea043; box-shadow: 0 0 0 2px rgba(35, 134, 54, 0.2) inset; }

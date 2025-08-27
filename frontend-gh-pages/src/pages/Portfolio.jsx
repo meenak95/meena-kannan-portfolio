@@ -206,17 +206,86 @@ const Portfolio = () => {
 
   const Cube = ({ project }) => {
     const [rotation, setRotation] = useState({ x: 0, y: 0 });
+    const [activeIndex, setActiveIndex] = useState(0); // 0..5 front,right,back,left,top,bottom
+    const faces = ['Front', 'Right', 'Back', 'Left', 'Top', 'Bottom'];
 
-    const rotateLeft = () => setRotation(r => ({ ...r, y: r.y - 90 }));
-    const rotateRight = () => setRotation(r => ({ ...r, y: r.y + 90 }));
-    const rotateUp = () => setRotation(r => ({ ...r, x: r.x + 90 }));
-    const rotateDown = () => setRotation(r => ({ ...r, x: r.x - 90 }));
+    const setByIndex = (idx) => {
+      const i = ((idx % 6) + 6) % 6;
+      setActiveIndex(i);
+      switch (i) {
+        case 0: setRotation({ x: 0, y: 0 }); break;
+        case 1: setRotation({ x: 0, y: 90 }); break;
+        case 2: setRotation({ x: 0, y: 180 }); break;
+        case 3: setRotation({ x: 0, y: -90 }); break;
+        case 4: setRotation({ x: 90, y: 0 }); break;
+        case 5: setRotation({ x: -90, y: 0 }); break;
+      }
+    };
+
+    // Pointer drag
+    useEffect(() => {
+      const wrapper = document.getElementById(`cube-${project.id}`);
+      if (!wrapper) return;
+      let startX = 0, startY = 0, dragging = false;
+      const onDown = (e) => {
+        dragging = true;
+        startX = e.touches ? e.touches[0].clientX : e.clientX;
+        startY = e.touches ? e.touches[0].clientY : e.clientY;
+      };
+      const onMove = (e) => {
+        if (!dragging) return;
+        const x = e.touches ? e.touches[0].clientX : e.clientX;
+        const y = e.touches ? e.touches[0].clientY : e.clientY;
+        const dx = x - startX;
+        const dy = y - startY;
+        if (Math.abs(dx) > 40 || Math.abs(dy) > 40) {
+          if (Math.abs(dx) > Math.abs(dy)) {
+            setByIndex(activeIndex + (dx > 0 ? 1 : -1));
+          } else {
+            setByIndex(activeIndex + (dy < 0 ? 4 : 5) - activeIndex); // up->top, down->bottom
+          }
+          dragging = false;
+        }
+      };
+      const onUp = () => { dragging = false; };
+      wrapper.addEventListener('mousedown', onDown);
+      wrapper.addEventListener('mousemove', onMove);
+      wrapper.addEventListener('mouseup', onUp);
+      wrapper.addEventListener('mouseleave', onUp);
+      wrapper.addEventListener('touchstart', onDown, { passive: true });
+      wrapper.addEventListener('touchmove', onMove, { passive: true });
+      wrapper.addEventListener('touchend', onUp);
+      return () => {
+        wrapper.removeEventListener('mousedown', onDown);
+        wrapper.removeEventListener('mousemove', onMove);
+        wrapper.removeEventListener('mouseup', onUp);
+        wrapper.removeEventListener('mouseleave', onUp);
+        wrapper.removeEventListener('touchstart', onDown);
+        wrapper.removeEventListener('touchmove', onMove);
+        wrapper.removeEventListener('touchend', onUp);
+      };
+    }, [activeIndex, project.id]);
+
+    // Keyboard navigation
+    const onKeyDown = (e) => {
+      if (e.key === 'ArrowLeft') setByIndex(activeIndex - 1);
+      if (e.key === 'ArrowRight') setByIndex(activeIndex + 1);
+      if (e.key === 'ArrowUp') setByIndex(4); // top
+      if (e.key === 'ArrowDown') setByIndex(5); // bottom
+    };
 
     const faceClass = 'glass-card p-0 bg-[#0d1117]/90 border-[#30363d]';
 
     return (
       <div className="cube-scene">
-        <div className="cube-wrapper">
+        <div
+          id={`cube-${project.id}`}
+          className="cube-wrapper focus-ring"
+          role="group"
+          tabIndex={0}
+          onKeyDown={onKeyDown}
+          aria-label={`Project ${project.title} - drag, arrow keys, or use steps to explore faces`}
+        >
           <div
             className="cube"
             style={{ transform: `translateZ(-130px) rotateX(${rotation.x}deg) rotateY(${rotation.y}deg)` }}
@@ -290,12 +359,18 @@ const Portfolio = () => {
             </div>
           </div>
 
-          {/* Controls */}
-          <div className="cube-controls">
-            <button className="ctrl-left" onClick={rotateLeft} aria-label="Rotate Left">◀</button>
-            <button className="ctrl-right" onClick={rotateRight} aria-label="Rotate Right">▶</button>
-            <button className="ctrl-up" onClick={rotateUp} aria-label="Rotate Up">▲</button>
-            <button className="ctrl-down" onClick={rotateDown} aria-label="Rotate Down">▼</button>
+          {/* Stepper guidance */}
+          <div className="cube-stepper">
+            {faces.map((label, idx) => (
+              <button
+                key={label}
+                className={`cube-step-btn ${activeIndex === idx ? 'cube-step-btn-active' : ''}`}
+                onClick={() => setByIndex(idx)}
+                aria-label={`Show ${label} face`}
+              >
+                {label[0]}
+              </button>
+            ))}
           </div>
         </div>
       </div>
