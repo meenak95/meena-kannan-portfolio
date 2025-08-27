@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { Activity, Shield, ArrowRight, GitBranch, Cloud, Gauge, AlertTriangle, Wand2, Rocket, Plug } from 'lucide-react'
 import Marquee from '../components/Marquee'
+import SciFiBackground from '../components/SciFiBackground'
+import HoloCard from '../components/HoloCard'
 const Testimonials = () => (
   <section className="py-20 bg-secondary/30">
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -103,8 +105,9 @@ const Home = () => {
 
   return (
     <div className="min-h-screen pt-16">
-      {/* Hero Section - Locofy-inspired mesh + parallax */}
-      <section className="relative overflow-hidden py-20 lg:py-32 mesh-hero">
+      {/* Hero Section - Sci-fi */}
+      <section className="relative overflow-hidden py-24 lg:py-40 mesh-hero">
+        <SciFiBackground />
         <div className="parallax-layer" aria-hidden></div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center"
           onMouseMove={(e) => {
@@ -121,10 +124,10 @@ const Home = () => {
               <span>Cloud & DevOps Engineer</span>
             </div>
 
-            <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
-              <span className="text-primary">Cloud & DevOps Metrics</span>
+            <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight neon-text">
+              <span className="text-primary">Cloud & DevOps,</span>
               <br />
-              <span className="gradient-text">Reliability at Scale</span>
+              <span className="gradient-text">Reimagined</span>
             </h1>
             
             <p className="text-xl md:text-2xl mb-8 text-secondary max-w-4xl mx-auto leading-relaxed">
@@ -158,7 +161,7 @@ const Home = () => {
         </div>
       </section>
 
-      {/* DevOps Capabilities */}
+      {/* DevOps Capabilities - HoloCards */}
       <section className="py-20 relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
@@ -172,17 +175,15 @@ const Home = () => {
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {features.map((feature, index) => (
-              <div 
-                key={index} 
-                className={`stat-card animate-fade-in-up glow-card ${feature.delay}`}
-                style={{ animationDelay: `${index * 100}ms` }}
+              <HoloCard
+                key={index}
+                title={feature.title}
+                subtitle="Capability"
+                icon={feature.icon}
+                className={`reveal-up ${feature.delay}`}
               >
-                <div className={`inline-flex p-4 rounded-2xl bg-gradient-to-br ${feature.color} text-white mb-4 group-hover:scale-110 transition-transform duration-300`}>
-                  {feature.icon}
-                </div>
-                <h3 className="text-xl font-semibold text-primary mb-2">{feature.title}</h3>
-                <p className="text-secondary leading-relaxed">{feature.description}</p>
-              </div>
+                {feature.description}
+              </HoloCard>
             ))}
           </div>
         </div>

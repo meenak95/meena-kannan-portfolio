@@ -925,3 +925,39 @@
   0% { transform: translateX(0); }
   100% { transform: translateX(-50%); }
 }
+
+/* Sci-fi theme */
+.starfield, .starfield::before, .starfield::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: transparent url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="2" height="2"><circle cx="1" cy="1" r="1" fill="white"/></svg>') repeat;
+  opacity: 0.05;
+}
+.starfield::before { transform: translateZ(0) scale(1.2); opacity: 0.04; }
+.starfield::after { transform: translateZ(0) scale(1.4); opacity: 0.03; }
+
+.scanlines {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(to bottom, rgba(255,255,255,0.035) 0px, rgba(255,255,255,0.035) 1px, transparent 2px);
+  pointer-events: none;
+  mix-blend-mode: overlay;
+}
+
+.neon-text { text-shadow: 0 0 8px rgba(88,166,255,0.8), 0 0 16px rgba(88,166,255,0.4); }
+.neon-border { box-shadow: 0 0 0 1px rgba(88,166,255,0.3), 0 0 18px rgba(88,166,255,0.2) inset; }
+
+.holo-tilt { transition: transform 0.2s ease; transform-style: preserve-3d; }
+.holo-tilt:hover { transform: perspective(900px) rotateX(6deg) rotateY(-6deg) translateZ(4px); }
+
+.grid-warp {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center, rgba(58,166,255,0.2), transparent 60%),
+    linear-gradient(transparent 24px, rgba(48,54,61,0.4) 25px) repeat,
+    linear-gradient(90deg, transparent 24px, rgba(48,54,61,0.4) 25px) repeat;
+  background-size: 100% 100%, 25px 25px, 25px 25px;
+  filter: perspective(800px) rotateX(60deg);
+  transform-origin: center top;
+}
