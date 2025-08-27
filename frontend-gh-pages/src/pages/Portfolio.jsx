@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import SciFiBackground from '../components/SciFiBackground'
+// import SciFiBackground from '../components/SciFiBackground'
 import {
   SiReact,
   SiNodedotjs,
@@ -213,9 +213,7 @@ const Portfolio = () => {
 
   return (
     <div className={`min-h-screen bg-primary transition-all duration-1000 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
-      <div className="relative">
-        <SciFiBackground />
-      </div>
+      {/* Background removed for stability; re-enable once verified */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {/* Hero */}
         <div className="text-center mb-16">
