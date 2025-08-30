@@ -4,6 +4,7 @@ import { Activity, Shield, ArrowRight, GitBranch, Cloud, Gauge, AlertTriangle, W
 import Marquee from '../components/Marquee'
 import SciFiBackground from '../components/SciFiBackground'
 import HoloCard from '../components/HoloCard'
+import FAQ from '../components/FAQ'
 const Testimonials = () => (
   <section className="py-20 bg-secondary/30">
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -225,6 +226,9 @@ const Home = () => {
           </div>
         </div>
       </section>
+
+      {/* FAQ */}
+      <FAQ />
 
       {/* Testimonials */}
       <Testimonials />
