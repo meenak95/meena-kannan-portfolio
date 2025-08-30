@@ -105,72 +105,24 @@ const Home = () => {
 
   return (
     <div className="min-h-screen pt-16">
-      {/* Hero Section - Sci-fi */}
-      <section className="relative overflow-hidden py-24 lg:py-40 mesh-hero glitter-bg">
-        <SciFiBackground />
-        <div className="parallax-layer" aria-hidden></div>
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center"
-          onMouseMove={(e) => {
-            const r = e.currentTarget.getBoundingClientRect();
-            const mx = ((e.clientX - r.left) / r.width) * 100;
-            const my = ((e.clientY - r.top) / r.height) * 100;
-            document.documentElement.style.setProperty('--mx', mx + '%');
-            document.documentElement.style.setProperty('--my', my + '%');
-          }}
-        >
-          <div className={`transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-            <div className="inline-flex items-center space-x-2 px-4 py-2 bg-[#21262d] border border-[#30363d] rounded-full text-secondary text-sm mb-8">
-              <Activity className="h-4 w-4 text-[#238636]" />
-              <span>Cloud & DevOps Engineer</span>
-            </div>
-
-            <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight neon-text">
-              <span className="text-primary">Cloud & DevOps,</span>
-              <br />
-              <span className="gradient-text">Reimagined</span>
-            </h1>
-            
-            <p className="text-xl md:text-2xl mb-8 text-secondary max-w-4xl mx-auto leading-relaxed">
-              Outcome-driven SRE practices with deep observability and operational excellence. 
-              I optimize uptime, latency, and delivery velocity across cloud-native platforms.
-            </p>
-
-            <div className="flex flex-col sm:flex-row gap-6 justify-center mb-12">
-              <Link
-                to="/portfolio"
-                className="btn-primary group btn-glitter hover-intense"
-              >
-                <Cloud className="mr-3 h-6 w-6 cloud-icon" />
-                <span className="relative z-10">View Portfolio</span>
-                <ArrowRight className="ml-3 h-6 w-6 group-hover:translate-x-2 transition-transform duration-300" />
-              </Link>
-              <Link
-                to="/portfolio"
-                className="btn-outline group hover-intense"
-              >
-                <span className="relative z-10">See Case Studies</span>
-                <ArrowRight className="ml-3 h-6 w-6 group-hover:translate-x-2 transition-transform duration-300" />
-              </Link>
-            </div>
-
-            {/* Marquee */}
-            <div className="mt-8">
-              <Marquee />
-            </div>
+      {/* Apple-like Hero */}
+      <section className="section-pad snap-section">
+        <div className="max-w-5xl mx-auto px-6 text-center">
+          <h1 className="headline font-bold mb-6">Cloud & DevOps, refined.</h1>
+          <p className="subhead mb-8">Fast delivery. Measurable reliability. Elegant engineering.</p>
+          <div className="flex items-center justify-center gap-3">
+            <Link to="/portfolio" className="btn-apple">View Work</Link>
+            <Link to="/resume" className="btn-secondary">Resume</Link>
           </div>
         </div>
       </section>
 
-      {/* DevOps Capabilities - HoloCards */}
-      <section className="py-20 relative">
+      {/* Apple-like sections */}
+      <section className="section-pad snap-section">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-primary mb-4">
-              Built for <span className="gradient-text">Observability & Delivery</span>
-            </h2>
-            <p className="text-xl text-secondary max-w-3xl mx-auto">
-              Enterprise-grade cloud platforms designed for reliability, scalability, and fast feedback
-            </p>
+            <h2 className="headline">Built for Observability & Delivery</h2>
+            <p className="subhead">Enterprise-grade platforms, tuned for outcomes</p>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">

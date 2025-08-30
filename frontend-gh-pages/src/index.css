@@ -954,6 +954,16 @@
   background: transparent url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="2" height="2"><circle cx="1" cy="1" r="1" fill="white"/></svg>') repeat;
   opacity: 0.05;
 }
+
+/* Apple-like utilities */
+.snap-container { scroll-snap-type: y mandatory; }
+.snap-section { scroll-snap-align: start; }
+.sticky-media { position: sticky; top: 10vh; }
+.btn-apple { @apply text-[#eaf2ff] bg-[#0f1115] rounded-full px-6 py-3 border border-[#2a2f3a]; }
+.btn-apple:hover { background: #141722; border-color: #3a4252; }
+.headline { font-size: clamp(2rem, 6vw, 4.5rem); line-height: 1.05; letter-spacing: -0.02em; }
+.subhead { font-size: clamp(1rem, 2vw, 1.25rem); color: #9fb0c9; }
+.section-pad { padding: 16vh 0; }
 .starfield::before { transform: translateZ(0) scale(1.2); opacity: 0.04; }
 .starfield::after { transform: translateZ(0) scale(1.4); opacity: 0.03; }
 
