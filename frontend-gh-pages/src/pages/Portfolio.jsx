@@ -213,46 +213,50 @@ const Portfolio = () => {
   };
 
   return (
-    <div className={`min-h-screen bg-primary transition-all duration-1000 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
+    <div className={`min-h-screen bg-primary transition-all duration-1000 ${isVisible ? 'opacity-100' : 'opacity-0'} snap-container`}>
       {/* Background removed for stability; re-enable once verified */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        {/* Hero */}
-        <div className="text-center mb-16">
-          <h1 className="text-4xl md:text-6xl font-bold text-primary neon-text mb-3">
-            Projects, Reimagined
-          </h1>
-          <p className="text-xl text-secondary max-w-3xl mx-auto">
-            Sci‑fi inspired showcase of high‑impact systems and experiences
-          </p>
-        </div>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Apple-like Hero */}
+        <section className="section-pad snap-section text-center">
+          <h1 className="headline font-bold mb-4">Projects, refined.</h1>
+          <p className="subhead mb-8">Systems, outcomes, and experiences crafted with care</p>
+          <div className="flex items-center justify-center gap-3">
+            <Link to="/" className="btn-apple">Home</Link>
+            <Link to="/resume" className="btn-secondary">Resume</Link>
+          </div>
+        </section>
 
         {/* Category Filter */}
-        <div className="flex flex-wrap justify-center gap-3 mb-12">
+        <section className="snap-section">
+        <div className="flex flex-wrap justify-center gap-3 mb-10">
           {['all', 'fullstack', 'frontend', 'backend', 'ai', 'devops'].map((category) => (
             <button
               key={category}
               onClick={() => setActiveCategory(category)}
-              className={`neon-chip ${
-                activeCategory === category ? 'border-[#238636] text-white' : 'text-secondary hover:text-primary'
+              aria-pressed={activeCategory === category}
+              className={`btn-apple ${
+                activeCategory === category ? 'border-[#00eaff] bg-[#121722]' : ''
               }`}
             >
-              {category === 'ai' ? '🤖' : category === 'frontend' ? '🎨' : category === 'backend' ? '🛠️' : category === 'devops' ? '🚀' : category === 'fullstack' ? '🧩' : '✨'}
-              <span className="font-medium">{category.charAt(0).toUpperCase() + category.slice(1)}</span>
+              <span className="font-medium">{category === 'ai' ? 'AI' : category.charAt(0).toUpperCase() + category.slice(1)}</span>
             </button>
           ))}
         </div>
+        </section>
 
         {/* Projects Grid - Holo Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
+        <section className="section-pad snap-section">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
           {filteredProjects.map((project) => (
             <div key={project.id}>
               <Cube project={project} />
             </div>
           ))}
         </div>
+        </section>
 
         {/* Skills Section */}
-        <div className="mt-20 relative">
+        <section className="section-pad snap-section relative">
           {/* Cloud Background for Skills */}
           <div className="absolute inset-0 overflow-hidden">
             <div className="absolute top-10 left-10 w-40 h-40 bg-gradient-to-r from-[#3a6ff]/5 to-transparent rounded-full blur-3xl float-delay-1"></div>
@@ -260,9 +264,7 @@ const Portfolio = () => {
             <div className="cloud-particles"></div>
           </div>
           
-          <h2 className="text-3xl font-bold text-primary text-center mb-12 relative">
-            <span className="gradient-text">Cloud-Powered</span> Technical Skills
-          </h2>
+          <h2 className="headline text-center mb-8">Technical Skills</h2>
           
           <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
             {[
@@ -297,7 +299,7 @@ const Portfolio = () => {
               );
             })}
           </div>
-        </div>
+        </section>
       </div>
     </div>
   );
