@@ -106,7 +106,7 @@ const Home = () => {
   return (
     <div className="min-h-screen pt-16">
       {/* Hero Section - Sci-fi */}
-      <section className="relative overflow-hidden py-24 lg:py-40 mesh-hero">
+      <section className="relative overflow-hidden py-24 lg:py-40 mesh-hero glitter-bg">
         <SciFiBackground />
         <div className="parallax-layer" aria-hidden></div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center"

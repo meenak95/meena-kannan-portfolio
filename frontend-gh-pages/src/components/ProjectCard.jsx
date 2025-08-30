@@ -10,10 +10,14 @@ const ProjectCard = ({ project, techToIcon }) => {
     e.currentTarget.style.setProperty('--gy', gy + '%')
   }
 
+  const onImgError = (e) => {
+    e.currentTarget.src = 'https://images.unsplash.com/photo-1518779578993-ec3579fee39f?w=400&h=250&fit=crop'
+  }
+
   return (
-    <div className="group glass-card neon-border glow-card holo-border radial-light overflow-hidden hover-intense holo-tilt transition-all duration-500" onMouseMove={onMove}>
+    <div className="group glass-card neon-border glow-card holo-border radial-light glitter-bg overflow-hidden hover-intense holo-tilt transition-all duration-500" onMouseMove={onMove}>
       <div className="relative h-44 w-full overflow-hidden">
-        <img src={project.image} alt={project.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+        <img src={project.image} onError={onImgError} alt={project.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
         <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
         <div className="absolute top-3 left-3 flex gap-2">
           {project.featured && !project.isEnterprise && (
