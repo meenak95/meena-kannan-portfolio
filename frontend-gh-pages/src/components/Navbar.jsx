@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import { Menu, X, Code } from 'lucide-react'
+import { Menu, X, Cloud } from 'lucide-react'
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -31,13 +31,13 @@ const Navbar = () => {
             <Link to="/" className="flex items-center space-x-3 group">
               <div className="relative">
                 <div className="w-10 h-10 bg-gradient-to-br from-[#238636] to-[#2ea043] rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                  <Code className="h-6 w-6 text-white" />
+                  <Cloud className="h-6 w-6 text-white" />
                 </div>
                 <div className="absolute -inset-1 bg-gradient-to-br from-[#238636] to-[#2ea043] rounded-xl blur opacity-20 group-hover:opacity-40 transition-opacity duration-300"></div>
               </div>
               <div className="hidden sm:block">
                 <span className="text-xl font-bold text-primary">Meena Kannan</span>
-                <div className="text-xs text-secondary">Lead/Senior Software Engineer</div>
+                <div className="text-xs text-secondary">Cloud & DevOps Engineer</div>
               </div>
             </Link>
           </div>
@@ -46,15 +46,21 @@ const Navbar = () => {
           <div className="hidden md:flex items-center space-x-1">
             <Link 
               to="/" 
-              className={`nav-link ${isActive('/') || isActive('/resume') ? 'nav-link-active' : ''}`}
+              className={`nav-link ${isActive('/') ? 'nav-link-active' : ''}`}
             >
-              Resume
+              Home
             </Link>
             <Link 
               to="/portfolio" 
               className={`nav-link ${isActive('/portfolio') ? 'nav-link-active' : ''}`}
             >
               Portfolio
+            </Link>
+            <Link 
+              to="/resume" 
+              className={`nav-link ${isActive('/resume') ? 'nav-link-active' : ''}`}
+            >
+              Resume
             </Link>
           </div>
 
@@ -88,13 +94,13 @@ const Navbar = () => {
             <Link
               to="/"
               className={`block px-3 py-2 rounded-lg text-base font-medium transition-all duration-200 ${
-                isActive('/') || isActive('/resume')
+                isActive('/')
                   ? 'text-primary bg-[#21262d] border border-[#30363d]'
                   : 'text-secondary hover:text-primary hover:bg-[#21262d]/50'
               }`}
               onClick={() => setIsMenuOpen(false)}
             >
-              Resume
+              Home
             </Link>
             <Link
               to="/portfolio"

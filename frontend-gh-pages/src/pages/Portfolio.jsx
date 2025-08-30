@@ -1,4 +1,7 @@
 import React, { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
+// import SciFiBackground from '../components/SciFiBackground'
+import ProjectCard from '../components/ProjectCard'
 import {
   SiReact,
   SiNodedotjs,
@@ -204,141 +207,65 @@ const Portfolio = () => {
     ? projects 
     : projects.filter(project => project.category === activeCategory);
 
+  const Cube = ({ project }) => {
+    return (
+      <ProjectCard project={project} techToIcon={getIconForTechnology} />
+    );
+  };
+
   return (
-    <div className={`min-h-screen bg-primary transition-all duration-1000 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        {/* Header */}
-        <div className="text-center mb-16">
-          <h1 className="text-4xl md:text-6xl font-bold text-primary mb-6">
-            My Portfolio
-          </h1>
-          <p className="text-xl text-secondary max-w-3xl mx-auto">
-            A showcase of my projects, skills, and experience in full-stack development, 
-            mobile apps, and cloud infrastructure.
-          </p>
-        </div>
+    <div className={`min-h-screen bg-primary transition-all duration-1000 ${isVisible ? 'opacity-100' : 'opacity-0'} snap-container`}>
+      {/* Background removed for stability; re-enable once verified */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Apple-like Hero */}
+        <section className="section-pad snap-section text-center">
+          <h1 className="headline font-bold mb-4">Projects, refined.</h1>
+          <p className="subhead mb-8">Systems, outcomes, and experiences crafted with care</p>
+          <div className="flex items-center justify-center gap-3">
+            <Link to="/" className="btn-apple">Home</Link>
+            <Link to="/resume" className="btn-secondary">Resume</Link>
+          </div>
+        </section>
 
         {/* Category Filter */}
-        <div className="flex flex-wrap justify-center gap-4 mb-12">
+        <section className="snap-section">
+        <div className="flex flex-wrap justify-center gap-3 mb-10">
           {['all', 'fullstack', 'frontend', 'backend', 'ai', 'devops'].map((category) => (
             <button
               key={category}
               onClick={() => setActiveCategory(category)}
-              className={`px-6 py-3 rounded-lg font-medium transition-all duration-200 ${
-                activeCategory === category
-                  ? 'bg-[#238636] text-white shadow-lg'
-                  : 'bg-[#21262d] text-secondary hover:text-primary hover:bg-[#30363d]'
+              aria-pressed={activeCategory === category}
+              className={`btn-apple ${
+                activeCategory === category ? 'border-[#00eaff] bg-[#121722]' : ''
               }`}
             >
-              {category.charAt(0).toUpperCase() + category.slice(1)}
+              <span className="font-medium">{category === 'ai' ? 'AI' : category.charAt(0).toUpperCase() + category.slice(1)}</span>
             </button>
           ))}
         </div>
+        </section>
 
-        {/* Projects Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {/* Projects Grid - Holo Cards */}
+        <section className="section-pad snap-section">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
           {filteredProjects.map((project) => (
-            <div key={project.id} className="space-y-4">
-              {/* Enterprise Label Above Container */}
-              {project.isEnterprise && (
-                <div className="flex items-center gap-2 text-sm text-secondary">
-                  <div className="w-2 h-2 bg-[#f78166] rounded-full"></div>
-                  <span className="font-medium">Enterprise Project</span>
-                </div>
-              )}
-              
-              <div className="glass-card group hover-intense transition-all duration-500 cursor-pointer">
-                {/* Project Image */}
-                <div className="relative overflow-hidden rounded-t-lg">
-                  <img
-                    src={project.image}
-                    alt={project.title}
-                    className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-300"
-                  />
-                  {project.featured && !project.isEnterprise && (
-                    <div className="absolute top-4 right-4 bg-[#238636] text-white px-3 py-1 rounded-full text-sm font-medium">
-                      Featured
-                    </div>
-                  )}
-                </div>
-
-                {/* Project Content */}
-                <div className="p-6">
-                  <h3 className="text-xl font-bold text-primary mb-2 group-hover:text-[#238636] transition-colors duration-200">
-                    {project.title}
-                  </h3>
-                  <p className="text-secondary mb-4 line-clamp-3">
-                    {project.description}
-                  </p>
-
-                  {/* Technologies */}
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    {project.technologies.map((tech) => {
-                      const IconComponent = getIconForTechnology(tech);
-                      return (
-                        <span
-                          key={tech}
-                          className="flex items-center gap-2 px-3 py-1 bg-[#21262d] text-secondary rounded-full text-sm"
-                        >
-                          <IconComponent className="w-4 h-4" />
-                          {tech}
-                        </span>
-                      );
-                    })}
-                  </div>
-
-                  {/* Project Stats */}
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="flex items-center gap-2">
-                      <span className="text-[#238636] font-medium">{project.rating}</span>
-                      <span className="text-secondary">★</span>
-                      <span className="text-secondary text-sm">({project.stars})</span>
-                    </div>
-                  </div>
-
-                  {/* Action Buttons */}
-                  <div className="flex gap-3">
-                    <a
-                      href={project.githubUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex-1 bg-[#21262d] hover:bg-[#30363d] text-primary hover:text-[#238636] px-4 py-2 rounded-lg text-center font-medium transition-all duration-200"
-                    >
-                      View Code
-                    </a>
-                    {project.liveUrl ? (
-                      <a
-                        href={project.liveUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex-1 bg-[#238636] hover:bg-[#2ea043] text-white px-4 py-2 rounded-lg text-center font-medium transition-all duration-200"
-                      >
-                        Live Demo
-                      </a>
-                    ) : (
-                      <div className="flex-1 bg-[#f78166] text-white px-4 py-2 rounded-lg text-center font-medium cursor-not-allowed">
-                        Enterprise Project
-                      </div>
-                    )}
-                  </div>
-                </div>
-              </div>
+            <div key={project.id}>
+              <Cube project={project} />
             </div>
           ))}
         </div>
+        </section>
 
-              {/* Skills Section */}
-      <div className="mt-20 relative">
-        {/* Cloud Background for Skills */}
-        <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute top-10 left-10 w-40 h-40 bg-gradient-to-r from-[#3a6ff]/5 to-transparent rounded-full blur-3xl float-delay-1"></div>
-          <div className="absolute bottom-10 right-10 w-32 h-32 bg-gradient-to-l from-[#58a6ff]/8 to-transparent rounded-full blur-2xl float-delay-2"></div>
-          <div className="cloud-particles"></div>
-        </div>
-        
-        <h2 className="text-3xl font-bold text-primary text-center mb-12 relative">
-          <span className="gradient-text">Cloud-Powered</span> Technical Skills
-        </h2>
+        {/* Skills Section */}
+        <section className="section-pad snap-section relative">
+          {/* Cloud Background for Skills */}
+          <div className="absolute inset-0 overflow-hidden">
+            <div className="absolute top-10 left-10 w-40 h-40 bg-gradient-to-r from-[#3a6ff]/5 to-transparent rounded-full blur-3xl float-delay-1"></div>
+            <div className="absolute bottom-10 right-10 w-32 h-32 bg-gradient-to-l from-[#58a6ff]/8 to-transparent rounded-full blur-2xl float-delay-2"></div>
+            <div className="cloud-particles"></div>
+          </div>
+          
+          <h2 className="headline text-center mb-8">Technical Skills</h2>
           
           <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
             {[
@@ -359,19 +286,21 @@ const Portfolio = () => {
             ].map((skill) => {
               const IconComponent = skill.icon;
               return (
-                                  <div
-                    key={skill.name}
-                    className="flex flex-col items-center p-6 glass-card hover-intense transition-all duration-500 cursor-pointer group"
-                  >
-                    <IconComponent className={`w-14 h-14 ${skill.color} group-hover:scale-125 transition-transform duration-300 animate-hyper-float`} />
-                    <span className="text-secondary text-sm mt-3 text-center group-hover:text-primary transition-colors duration-300 font-medium">
-                      {skill.name}
-                    </span>
+                <div
+                  key={skill.name}
+                  className="flex flex-col items-center p-6 glass-card neon-border holo-tilt hover-intense transition-all duration-500 cursor-pointer group"
+                >
+                  <div className="icon-wrap">
+                    <IconComponent className={`w-6 h-6 ${skill.color}`} />
                   </div>
+                  <span className="text-secondary text-sm mt-3 text-center group-hover:text-primary transition-colors duration-300 font-medium">
+                    {skill.name}
+                  </span>
+                </div>
               );
             })}
           </div>
-        </div>
+        </section>
       </div>
     </div>
   );

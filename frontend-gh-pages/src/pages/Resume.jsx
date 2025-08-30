@@ -3,27 +3,27 @@ import { Mail, MapPin, Phone, Linkedin, Award, Briefcase, BookOpen } from 'lucid
 import { resume } from '../data/resume'
 
 const Section = ({ title, children }) => (
-  <section className="mb-10">
-    <h2 className="text-2xl font-bold text-primary mb-4">{title}</h2>
-    <div className="glass-card p-6">{children}</div>
+  <section className="section-pad snap-section">
+    <h2 className="headline mb-4">{title}</h2>
+    <div className="glass-card neon-border p-6">{children}</div>
   </section>
 )
 
 const Resume = () => {
   return (
-    <div className="min-h-screen bg-primary">
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div className="min-h-screen bg-primary snap-container">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="mb-10">
-          <h1 className="text-4xl font-bold text-primary">{resume.name}</h1>
-          <p className="text-secondary text-lg">{resume.title}</p>
+        <section className="section-pad snap-section">
+          <h1 className="headline font-bold">{resume.name}</h1>
+          <p className="subhead">{resume.title}</p>
           <div className="flex flex-wrap items-center gap-4 mt-4 text-secondary">
             <span className="flex items-center gap-2"><MapPin className="w-4 h-4" /> {resume.location}</span>
             <a href={`tel:${resume.phone}`} className="flex items-center gap-2 hover:text-primary"><Phone className="w-4 h-4" /> {resume.phone}</a>
             <a href={`mailto:${resume.email}`} className="flex items-center gap-2 hover:text-primary"><Mail className="w-4 h-4" /> {resume.email}</a>
             <a href={resume.links.linkedin} target="_blank" rel="noreferrer" className="flex items-center gap-2 hover:text-primary"><Linkedin className="w-4 h-4" /> LinkedIn</a>
           </div>
-        </div>
+        </section>
 
         {/* Summary */}
         <Section title="Executive Summary">
@@ -112,14 +112,14 @@ const Resume = () => {
         </Section>
 
         {/* Contact Section */}
-        <div className="mt-12 text-center">
-          <div className="glass-card p-8">
+        <div className="section-pad text-center">
+          <div className="glass-card neon-border p-8">
             <h3 className="text-2xl font-bold text-primary mb-4">
               Interested in working together? Let's connect!
             </h3>
             <a
               href={`mailto:${resume.email}`}
-              className="inline-flex items-center gap-2 btn-primary"
+              className="inline-flex items-center gap-2 btn-apple"
             >
               <Mail className="w-5 h-5" />
               Contact Me
